@@ -1,0 +1,108 @@
+.np-rule-card {
+  padding: var(--np-spacing-4);
+  background-color: var(--np-white);
+  border-radius: var(--np-radius-md);
+  border: 1px solid var(--np-gray-100);
+}
+
+.np-rule-card__header {
+  display: flex;
+  gap: var(--np-spacing-3);
+  align-items: flex-start;
+}
+
+.np-rule-card__icon-wrapper {
+  flex-shrink: 0;
+  width: 40px;
+  height: 40px;
+  border-radius: var(--np-radius-md);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.np-rule-card__icon-wrapper--bonus {
+  background-color: var(--np-score-good-bg);
+}
+
+.np-rule-card__icon-wrapper--malus {
+  background-color: var(--np-score-discouraged-bg);
+}
+
+.np-rule-card__icon {
+  width: 20px;
+  height: 20px;
+}
+
+.np-rule-card__icon-wrapper--bonus .np-rule-card__icon {
+  color: var(--np-score-ideal);
+}
+
+.np-rule-card__icon-wrapper--malus .np-rule-card__icon {
+  color: var(--np-score-discouraged);
+}
+
+.np-rule-card__main {
+  flex: 1;
+  min-width: 0;
+}
+
+.np-rule-card__label {
+  font-size: var(--np-font-size-base);
+  font-weight: var(--np-font-weight-bold);
+  color: var(--np-gray-900);
+  margin-bottom: 2px;
+}
+
+.np-rule-card__reason {
+  font-size: var(--np-font-size-sm);
+  color: var(--np-gray-600);
+  line-height: 1.4;
+}
+
+.np-rule-card__impact {
+  flex-shrink: 0;
+  padding: 6px 12px;
+  border-radius: var(--np-radius-pill);
+  font-size: var(--np-font-size-sm);
+  font-weight: var(--np-font-weight-bold);
+  white-space: nowrap;
+}
+
+.np-rule-card__impact--bonus {
+  background-color: var(--np-score-good-bg);
+  color: var(--np-score-ideal);
+}
+
+.np-rule-card__impact--malus {
+  background-color: var(--np-score-discouraged-bg);
+  color: var(--np-score-discouraged);
+}
+
+.np-rule-card__impact-unit {
+  font-size: var(--np-font-size-xs);
+  font-weight: var(--np-font-weight-medium);
+  margin-left: 2px;
+}
+
+.np-rule-card__source {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  margin-top: var(--np-spacing-3);
+  padding-top: var(--np-spacing-2);
+  border-top: 1px solid var(--np-gray-100);
+  font-size: var(--np-font-size-xs);
+  color: var(--np-orange-primary);
+  font-weight: var(--np-font-weight-medium);
+  text-decoration: none;
+}
+
+.np-rule-card__source:hover {
+  text-decoration: underline;
+}
+
+.np-rule-card__source-icon {
+  width: 12px;
+  height: 12px;
+}

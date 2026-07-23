@@ -1,0 +1,32 @@
+<article [class]="'np-rule-card np-rule-card--' + rule.status">
+  <div class="np-rule-card__header">
+    <div [class]="'np-rule-card__icon-wrapper np-rule-card__icon-wrapper--' + rule.status">
+      <span>●</span>
+    </div>
+    <div class="np-rule-card__main">
+      <h4 class="np-rule-card__label">{{ rule.rule_label }}</h4>
+      <p class="np-rule-card__reason">{{ rule.reason }}</p>
+    </div>
+    @if (rule.status !== 'satisfied') {
+      <div [class]="'np-rule-card__points np-rule-card__points--' + rule.status">
+        {{ rule.points > 0 ? '+' : '' }}{{ rule.points }}
+        <span class="np-rule-card__points-unit">pts</span>
+      </div>
+    } @else {
+      <div class="np-rule-card__check">
+        <span class="np-rule-card__check-icon">✓</span>
+      </div>
+    }
+  </div>
+  @if (rule.source_url) {
+    <a
+      [href]="rule.source_url"
+      target="_blank"
+      rel="noopener noreferrer"
+      class="np-rule-card__source"
+    >
+      <span class="np-rule-card__source-icon">↗</span>
+      <span>Source : {{ rule.source_name }}</span>
+    </a>
+  }
+</article>

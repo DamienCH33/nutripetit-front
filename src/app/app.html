@@ -11,6 +11,9 @@
       [level]="r.score.level"
       [levelLabel]="r.score.level"
     />
+    @for (rule of r.score.appliedRules; track rule.rule_code) {
+      <app-rule-card [rule]="rule" />
+    }
   } @else {
     <p>Chargement…</p>
   }
