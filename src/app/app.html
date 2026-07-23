@@ -1,5 +1,11 @@
 <div style="max-width: 400px; margin: 40px auto">
   @if (result(); as r) {
+    <app-product-header
+      [name]="r.product.name"
+      [brand]="r.product.brand"
+      [ean]="r.product.ean"
+      [imageUrl]="r.product.imageUrl"
+    />
     <app-score-circle
       [score]="r.score.finalScore"
       [level]="r.score.level"

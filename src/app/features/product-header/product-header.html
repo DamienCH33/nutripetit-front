@@ -1,0 +1,16 @@
+<section class="np-product__header">
+  <div class="np-product__header-row">
+    <div class="np-product__image">
+      @if (imageUrl) {
+        <img [src]="imageUrl" [alt]="name" />
+      } @else {
+        <span class="np-product__image-placeholder">📷</span>
+      }
+    </div>
+    <div class="np-product__identity">
+      <h1 class="np-product__name">{{ name }}</h1>
+      <p class="np-product__brand">{{ brand }}</p>
+      <p class="np-product__ean">EAN : {{ ean }}</p>
+    </div>
+  </div>
+</section>
