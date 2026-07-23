@@ -1,0 +1,63 @@
+<div class="np-product">
+  @if (result(); as r) {
+    <app-product-header
+      [name]="r.product.name"
+      [brand]="r.product.brand"
+      [ean]="r.product.ean"
+      [imageUrl]="r.product.imageUrl"
+    />
+
+    <app-score-circle
+      [score]="r.score.finalScore"
+      [level]="r.score.level"
+      [levelLabel]="r.score.level"
+    />
+
+    <!-- Points à surveiller (malus) -->
+    @if (rulesByCategory('malus').length > 0) {
+      <div class="np-rules-section">
+        <h3 class="np-rules-section__title np-rules-section__title--malus">Points à surveiller</h3>
+        @for (rule of rulesByCategory('malus'); track rule.rule_code) {
+          <app-rule-card [rule]="rule" />
+        }
+      </div>
+    }
+
+    <!-- Points positifs (bonus) -->
+    @if (rulesByCategory('bonus').length > 0) {
+      <div class="np-rules-section">
+        <h3 class="np-rules-section__title np-rules-section__title--bonus">Points positifs</h3>
+        @for (rule of rulesByCategory('bonus'); track rule.rule_code) {
+          <app-rule-card [rule]="rule" />
+        }
+      </div>
+    }
+
+    <!-- Informations (info) -->
+    @if (rulesByCategory('info').length > 0) {
+      <div class="np-rules-section">
+        <h3 class="np-rules-section__title">Informations</h3>
+        @for (rule of rulesByCategory('info'); track rule.rule_code) {
+          <app-rule-card [rule]="rule" />
+        }
+      </div>
+    }
+
+    <!-- Contrôles passés (satisfied) — accordéon -->
+    @if (rulesByCategory('satisfied').length > 0) {
+      <details class="np-rules-accordion" open>
+        <summary class="np-rules-accordion__summary">
+          <span>Contrôles passés ({{ rulesByCategory('satisfied').length }})</span>
+          <i class="np-rules-accordion__chevron" aria-hidden="true"></i>
+        </summary>
+        <div class="np-rules-accordion__body">
+          @for (rule of rulesByCategory('satisfied'); track rule.rule_code) {
+            <app-rule-card [rule]="rule" />
+          }
+        </div>
+      </details>
+    }
+  } @else {
+    <p>Chargement…</p>
+  }
+</div>
