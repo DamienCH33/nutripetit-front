@@ -1,4 +1,4 @@
-<div style="max-width: 400px; margin: 40px auto">
+<div class="np-product">
   @if (result(); as r) {
     <app-product-header
       [name]="r.product.name"
@@ -6,14 +6,18 @@
       [ean]="r.product.ean"
       [imageUrl]="r.product.imageUrl"
     />
+
     <app-score-circle
       [score]="r.score.finalScore"
       [level]="r.score.level"
       [levelLabel]="r.score.level"
     />
-    @for (rule of r.score.appliedRules; track rule.rule_code) {
-      <app-rule-card [rule]="rule" />
-    }
+
+    <div class="np-rules-section">
+      @for (rule of r.score.appliedRules; track rule.rule_code) {
+        <app-rule-card [rule]="rule" />
+      }
+    </div>
   } @else {
     <p>Chargement…</p>
   }

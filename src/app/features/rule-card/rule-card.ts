@@ -1,4 +1,5 @@
 import { Component, Input } from '@angular/core';
+import { Icon } from '../../shared/icon/icon';
 
 interface Rule {
   rule_code: string;
@@ -12,6 +13,7 @@ interface Rule {
 
 @Component({
   selector: 'app-rule-card',
+  imports: [Icon],
   templateUrl: './rule-card.html',
   styleUrl: './rule-card.scss',
 })

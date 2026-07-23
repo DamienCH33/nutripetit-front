@@ -1,5 +1,21 @@
-@use 'styles/variables';
-@use 'styles/reset';
+/* Base */
+@use 'legacy-styles/base/variables';
+@use 'legacy-styles/base/reset';
+@use 'legacy-styles/base/typography';
+@use 'legacy-styles/base/utilities';
+
+/* Components partagés */
+@use 'legacy-styles/components/buttons';
+@use 'legacy-styles/components/cards';
+@use 'legacy-styles/components/score';
+@use 'legacy-styles/components/navigation';
+@use 'legacy-styles/components/forms';
+@use 'legacy-styles/components/disclaimer';
+@use 'legacy-styles/components/pwa-install';
+@use 'legacy-styles/pages/home';
+
+/* Pages */
+@use 'legacy-styles/pages/product';
 
 body {
   font-family: var(--np-font-family);
