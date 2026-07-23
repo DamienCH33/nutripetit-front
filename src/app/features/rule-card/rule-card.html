@@ -1,7 +1,9 @@
 <article [class]="'np-rule-card np-rule-card--' + rule.category">
   <div class="np-rule-card__header">
     <div [class]="'np-rule-card__icon-wrapper np-rule-card__icon-wrapper--' + rule.category">
-      <app-icon name="circle" class="np-rule-card__icon" />
+      <div [class]="'np-rule-card__icon-wrapper np-rule-card__icon-wrapper--' + rule.category">
+        <app-icon [name]="iconName()" class="np-rule-card__icon" />
+      </div>
     </div>
     <div class="np-rule-card__main">
       <h4 class="np-rule-card__label">{{ rule.rule_label }}</h4>
@@ -11,10 +13,6 @@
       <div [class]="'np-rule-card__points np-rule-card__points--' + rule.category">
         {{ rule.points > 0 ? '+' : '' }}{{ rule.points }}
         <span class="np-rule-card__points-unit">pts</span>
-      </div>
-    } @else {
-      <div class="np-rule-card__check">
-        <app-icon name="check" class="np-rule-card__check-icon" />
       </div>
     }
   </div>

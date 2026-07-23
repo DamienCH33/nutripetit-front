@@ -20,4 +20,19 @@ interface Rule {
 })
 export class RuleCard {
   @Input({ required: true }) rule!: Rule;
+
+  iconName(): string {
+    switch (this.rule.category) {
+      case 'bonus':
+        return 'check';
+      case 'malus':
+        return 'x';
+      case 'info':
+        return 'info';
+      case 'satisfied':
+        return 'check';
+      default:
+        return 'circle';
+    }
+  }
 }

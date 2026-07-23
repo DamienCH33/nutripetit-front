@@ -6,6 +6,8 @@ import { PwaHeader } from './features/pwa-header/pwa-header';
 import { PwaBottomNav } from './features/pwa-bottom-nav/pwa-bottom-nav';
 import { ScanService, ScanResult } from './services/scan';
 
+type Rule = ScanResult['score']['appliedRules'][number];
+
 @Component({
   selector: 'app-root',
   imports: [ScoreCircle, ProductHeader, RuleCard, PwaHeader, PwaBottomNav],
@@ -20,5 +22,10 @@ export class App implements OnInit {
     this.scanService.scan('3041091342034').subscribe((data) => {
       this.result.set(data);
     });
+  }
+
+  rulesByCategory(category: string): Rule[] {
+    const rules = this.result()?.score.appliedRules ?? [];
+    return rules.filter((rule) => rule.category === category);
   }
 }
