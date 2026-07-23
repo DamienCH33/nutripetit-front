@@ -1,24 +1,32 @@
-<div class="np-product">
-  @if (result(); as r) {
-    <app-product-header
-      [name]="r.product.name"
-      [brand]="r.product.brand"
-      [ean]="r.product.ean"
-      [imageUrl]="r.product.imageUrl"
-    />
+<div class="np-pwa-shell">
+  <app-pwa-header />
 
-    <app-score-circle
-      [score]="r.score.finalScore"
-      [level]="r.score.level"
-      [levelLabel]="r.score.level"
-    />
+  <main class="np-pwa-main">
+    <div class="np-product">
+      @if (result(); as r) {
+        <app-product-header
+          [name]="r.product.name"
+          [brand]="r.product.brand"
+          [ean]="r.product.ean"
+          [imageUrl]="r.product.imageUrl"
+        />
 
-    <div class="np-rules-section">
-      @for (rule of r.score.appliedRules; track rule.rule_code) {
-        <app-rule-card [rule]="rule" />
+        <app-score-circle
+          [score]="r.score.finalScore"
+          [level]="r.score.level"
+          [levelLabel]="r.score.level"
+        />
+
+        <div class="np-rules-section">
+          @for (rule of r.score.appliedRules; track rule.rule_code) {
+            <app-rule-card [rule]="rule" />
+          }
+        </div>
+      } @else {
+        <p>Chargement…</p>
       }
     </div>
-  } @else {
-    <p>Chargement…</p>
-  }
+  </main>
 </div>
+
+<app-pwa-bottom-nav />
