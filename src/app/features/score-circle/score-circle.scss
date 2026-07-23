@@ -1,0 +1,115 @@
+.np-score-circle {
+  display: flex;
+  align-items: center;
+  gap: var(--np-spacing-4);
+  padding: var(--np-spacing-3);
+  background-color: var(--np-white);
+  border-radius: var(--np-radius-md);
+}
+
+.np-score-circle__visual {
+  position: relative;
+  width: 120px;
+  height: 120px;
+  flex-shrink: 0;
+}
+
+.np-score-circle__svg {
+  transform: rotate(-90deg);
+  width: 100%;
+  height: 100%;
+}
+
+.np-score-circle__bg {
+  fill: none;
+  stroke: var(--np-gray-100);
+  stroke-width: 8;
+}
+
+.np-score-circle__progress {
+  fill: none;
+  stroke-width: 8;
+  stroke-linecap: round;
+  transition: stroke-dasharray 1.2s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+
+.np-score-circle__progress--ideal {
+  stroke: var(--np-score-ideal);
+}
+.np-score-circle__progress--good {
+  stroke: var(--np-score-good);
+}
+.np-score-circle__progress--occasional {
+  stroke: var(--np-score-occasional);
+}
+.np-score-circle__progress--limit {
+  stroke: var(--np-score-limit);
+}
+.np-score-circle__progress--discouraged {
+  stroke: var(--np-score-discouraged);
+}
+
+.np-score-circle__value {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.np-score-circle__number {
+  font-size: 2.25rem;
+  font-weight: var(--np-font-weight-bold);
+  color: var(--np-gray-900);
+  line-height: 1;
+}
+
+.np-score-circle__total {
+  font-size: var(--np-font-size-xs);
+  color: var(--np-gray-500);
+  font-weight: var(--np-font-weight-medium);
+}
+
+.np-score-circle__info {
+  flex: 1;
+}
+
+.np-score-circle__dot {
+  display: inline-block;
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  margin-right: var(--np-spacing-1);
+  vertical-align: middle;
+}
+
+.np-score-circle__dot--ideal {
+  background-color: var(--np-score-ideal);
+}
+.np-score-circle__dot--good {
+  background-color: var(--np-score-good);
+}
+.np-score-circle__dot--occasional {
+  background-color: var(--np-score-occasional);
+}
+.np-score-circle__dot--limit {
+  background-color: var(--np-score-limit);
+}
+.np-score-circle__dot--discouraged {
+  background-color: var(--np-score-discouraged);
+}
+
+.np-score-circle__label {
+  font-size: var(--np-font-size-lg);
+  font-weight: var(--np-font-weight-bold);
+  color: var(--np-gray-900);
+  display: inline-block;
+  vertical-align: middle;
+  margin-bottom: 2px;
+}
+
+.np-score-circle__context {
+  font-size: var(--np-font-size-sm);
+  color: var(--np-gray-600);
+}

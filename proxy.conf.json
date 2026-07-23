@@ -1,0 +1,8 @@
+{
+  "/api": {
+    "target": "http://nutripetit.localhost",
+    "changeOrigin": true,
+    "secure": false,
+    "headers": { "Host": "nutripetit.localhost" }
+  }
+}

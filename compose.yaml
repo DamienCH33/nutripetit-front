@@ -1,0 +1,15 @@
+services:
+  angular:
+    image: node:22-alpine
+    user: '1000:1000'
+    container_name: nutripetit-front
+    working_dir: /app
+    volumes:
+      - .:/app
+    ports:
+      - '4200:4200'
+    extra_hosts:
+      - 'nutripetit.localhost:host-gateway'
+    command: sh -c "npm install && npm start -- --host 0.0.0.0 --poll 2000 --proxy-config proxy.conf.json"
+    restart: unless-stopped
+
