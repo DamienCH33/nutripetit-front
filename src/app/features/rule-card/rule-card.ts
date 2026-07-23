@@ -9,6 +9,7 @@ interface Rule {
   source_name: string;
   source_url: string;
   status: string;
+  category: string;
 }
 
 @Component({

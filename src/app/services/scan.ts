@@ -19,6 +19,7 @@ export interface ScanResult {
       source_name: string;
       source_url: string;
       status: string;
+      category: string;
     }>;
     algoVersion: string;
   };

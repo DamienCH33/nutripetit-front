@@ -1,6 +1,6 @@
-<article [class]="'np-rule-card np-rule-card--' + rule.status">
+<article [class]="'np-rule-card np-rule-card--' + rule.category">
   <div class="np-rule-card__header">
-    <div [class]="'np-rule-card__icon-wrapper np-rule-card__icon-wrapper--' + rule.status">
+    <div [class]="'np-rule-card__icon-wrapper np-rule-card__icon-wrapper--' + rule.category">
       <app-icon name="circle" class="np-rule-card__icon" />
     </div>
     <div class="np-rule-card__main">
@@ -8,7 +8,7 @@
       <p class="np-rule-card__reason">{{ rule.reason }}</p>
     </div>
     @if (rule.status !== 'satisfied') {
-      <div [class]="'np-rule-card__points np-rule-card__points--' + rule.status">
+      <div [class]="'np-rule-card__points np-rule-card__points--' + rule.category">
         {{ rule.points > 0 ? '+' : '' }}{{ rule.points }}
         <span class="np-rule-card__points-unit">pts</span>
       </div>
