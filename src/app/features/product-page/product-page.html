@@ -111,11 +111,94 @@
     }
 
     @if (activeTab() === 'environment') {
-      <p>Environnement — à venir</p>
+      <div class="np-env-info">
+        <p class="np-env-info__text">
+          <app-icon name="info" class="np-env-info__icon" />
+          Informations issues d'Open Food Facts. NutriPetit ne calcule pas de score environnemental.
+        </p>
+      </div>
+
+      <!-- Origine -->
+      @if (r.environment.origin) {
+        <article class="np-env-card">
+          <div class="np-env-card__icon-wrapper">
+            <app-icon name="leaf" class="np-env-card__icon" />
+          </div>
+          <div class="np-env-card__main">
+            <p class="np-env-card__label">Origine</p>
+            <p class="np-env-card__value">
+              {{ r.environment.origin.flag }} {{ r.environment.origin.country }}
+            </p>
+          </div>
+        </article>
+      }
+
+      <!-- Bio -->
+      <article class="np-env-card">
+        <div
+          [class]="
+            'np-env-card__icon-wrapper np-env-card__icon-wrapper--' +
+            (r.environment.bio_certified ? 'good' : 'neutral')
+          "
+        >
+          <app-icon name="leaf" class="np-env-card__icon" />
+        </div>
+        <div class="np-env-card__main">
+          <p class="np-env-card__label">Certification Bio AB</p>
+          <p class="np-env-card__value">
+            @if (r.environment.bio_certified) {
+              <span class="np-env-card__check">✓ Certifié</span>
+            } @else {
+              <span class="np-env-card__cross">Non certifié</span>
+            }
+          </p>
+        </div>
+      </article>
+
+      <!-- Huile de palme -->
+      <article class="np-env-card">
+        <div
+          [class]="
+            'np-env-card__icon-wrapper np-env-card__icon-wrapper--' +
+            (r.environment.palm_oil_free ? 'good' : 'limit')
+          "
+        >
+          <app-icon name="leaf" class="np-env-card__icon" />
+        </div>
+        <div class="np-env-card__main">
+          <p class="np-env-card__label">Huile de palme</p>
+          <p class="np-env-card__value">
+            @if (r.environment.palm_oil_free) {
+              <span class="np-env-card__check">✓ Sans huile de palme</span>
+            } @else {
+              <span class="np-env-card__cross">Contient de l'huile de palme</span>
+            }
+          </p>
+        </div>
+      </article>
     }
 
     @if (activeTab() === 'sources') {
-      <p>Sources — à venir</p>
+      <div class="np-sources-intro">
+        <div class="np-sources-intro__badge">Algorithme v{{ r.algoVersion }}</div>
+        <p class="np-sources-intro__text">
+          Cette analyse s'appuie sur les recommandations officielles suivantes. Chaque source est
+          vérifiable publiquement.
+        </p>
+      </div>
+
+      @for (source of r.uniqueSources; track source.name) {
+        <a [href]="source.url" target="_blank" rel="noopener noreferrer" class="np-source-card">
+          <div class="np-source-card__icon-wrapper">
+            <app-icon name="book-open" class="np-source-card__icon" />
+          </div>
+          <div class="np-source-card__content">
+            <p class="np-source-card__name">{{ source.name }}</p>
+            <p class="np-source-card__rules">{{ source.rules.join(' · ') }}</p>
+          </div>
+          <app-icon name="external-link" class="np-source-card__arrow" />
+        </a>
+      }
     }
   } @else {
     <p>Chargement…</p>
