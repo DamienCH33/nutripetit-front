@@ -4,14 +4,10 @@
       [name]="r.product.name"
       [brand]="r.product.brand"
       [ean]="r.product.ean"
-      [imageUrl]="r.product.imageUrl"
+      [imageUrl]="r.product.image_url"
     />
 
-    <app-score-circle
-      [score]="r.score.finalScore"
-      [level]="r.score.level"
-      [levelLabel]="r.score.level"
-    />
+    <app-score-circle [score]="r.finalScore" [level]="r.level" [levelLabel]="r.level" />
 
     <!-- Barre d'onglets -->
     <div class="np-tabs np-tabs--scrollable" role="tablist">
@@ -96,8 +92,32 @@
           </div>
         </details>
       }
-    } @else {
-      <p>Chargement…</p>
     }
+
+    @if (activeTab() === 'nutrients') {
+      @if (r.nutrients.length > 0) {
+        @for (nutrient of r.nutrients; track nutrient.name) {
+          <div class="np-nutrient">
+            <div class="np-nutrient__header">
+              <span class="np-nutrient__name">{{ nutrient.name }}</span>
+              <span class="np-nutrient__value">{{ nutrient.value }} {{ nutrient.unit }}</span>
+            </div>
+            <p class="np-nutrient__message">{{ nutrient.message }}</p>
+          </div>
+        }
+      } @else {
+        <p>Données nutritionnelles non disponibles pour ce produit.</p>
+      }
+    }
+
+    @if (activeTab() === 'environment') {
+      <p>Environnement — à venir</p>
+    }
+
+    @if (activeTab() === 'sources') {
+      <p>Sources — à venir</p>
+    }
+  } @else {
+    <p>Chargement…</p>
   }
 </div>
