@@ -1,0 +1,39 @@
+<article [class]="'np-nutrient' + (nutrient.available ? '' : ' np-nutrient--unavailable')">
+  <div class="np-nutrient__header">
+    <span class="np-nutrient__name">{{ nutrient.name }}</span>
+    @if (nutrient.available) {
+      <span [class]="'np-nutrient__value np-nutrient__value--' + nutrient.level">
+        {{ nutrient.value }}{{ nutrient.unit }}
+      </span>
+    } @else {
+      <span class="np-nutrient__value np-nutrient__value--unknown">N/D</span>
+    }
+  </div>
+
+  @if (nutrient.available) {
+    <div class="np-nutrient__gauge">
+      <div class="np-nutrient__bar"></div>
+      @if (nutrient.threshold_baby !== null) {
+        <div class="np-nutrient__threshold" [style.left.%]="thresholdPosition"></div>
+      }
+      <div
+        [class]="'np-nutrient__cursor np-nutrient__cursor--' + nutrient.level"
+        [style.left.%]="position"
+      ></div>
+    </div>
+    <div class="np-nutrient__scale">
+      <span>0{{ nutrient.unit }}</span>
+      @if (nutrient.threshold_baby !== null) {
+        <span class="np-nutrient__scale-threshold"
+          >{{ nutrient.threshold_baby }}{{ nutrient.unit }} max</span
+        >
+      }
+      <span>{{ nutrient.max_scale }}{{ nutrient.unit }}</span>
+    </div>
+  }
+
+  <p [class]="'np-nutrient__message np-nutrient__message--' + nutrient.level">
+    {{ nutrient.message }}
+  </p>
+  <p class="np-nutrient__reference">{{ nutrient.reference }}</p>
+</article>

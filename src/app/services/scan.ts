@@ -25,6 +25,8 @@ export interface Nutrient {
   available: boolean;
   value: number | null;
   unit: string;
+  threshold_baby: number | null;
+  max_scale: number;
   level: string;
   message: string;
   reference: string;

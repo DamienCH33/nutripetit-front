@@ -103,15 +103,18 @@
     }
 
     @if (activeTab() === 'nutrients') {
+      <div class="np-nutrients-info">
+        <p class="np-nutrients-info__text">
+          <app-icon name="info" class="np-nutrients-info__icon" />
+          Valeurs comparées aux seuils recommandés pour les tout-petits.
+        </p>
+      </div>
       @if (r.nutrients.length > 0) {
-        @for (nutrient of r.nutrients; track nutrient.name) {
-          <div class="np-nutrient">
-            <div class="np-nutrient__header">
-              <span class="np-nutrient__name">{{ nutrient.name }}</span>
-              <span class="np-nutrient__value">{{ nutrient.value }} {{ nutrient.unit }}</span>
-            </div>
-            <p class="np-nutrient__message">{{ nutrient.message }}</p>
-          </div>
+        @for (category of nutrientCategories(); track category) {
+          <h3 class="np-nutrients-category">{{ category }}</h3>
+          @for (nutrient of nutrientsByCategory(category); track nutrient.name) {
+            <app-nutrient-gauge [nutrient]="nutrient" />
+          }
         }
       } @else {
         <p>Données nutritionnelles non disponibles pour ce produit.</p>

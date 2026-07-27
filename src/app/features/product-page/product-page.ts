@@ -3,14 +3,15 @@ import { ActivatedRoute } from '@angular/router';
 import { ProductHeader } from '../product-header/product-header';
 import { RuleCard } from '../rule-card/rule-card';
 import { ScoreCircle } from '../score-circle/score-circle';
-import { ScanResult, ScanService, Rule } from '../../services/scan';
+import { ScanResult, ScanService, Rule, Nutrient } from '../../services/scan';
 import { Icon } from '../../shared/icon/icon';
 import { RouterLink } from '@angular/router';
+import { NutrientGauge } from '../nutrient-gauge/nutrient-gauge';
 
 @Component({
   selector: 'app-product-page',
   standalone: true,
-  imports: [ProductHeader, ScoreCircle, RuleCard, Icon, RouterLink],
+  imports: [ProductHeader, ScoreCircle, RuleCard, Icon, RouterLink, NutrientGauge],
   templateUrl: './product-page.html',
   styleUrl: './product-page.scss',
 })
@@ -47,5 +48,19 @@ export class ProductPage implements OnInit {
 
   setTab(tab: string): void {
     this.activeTab.set(tab);
+  }
+
+  nutrientCategories(): string[] {
+    const nutrients = this.result()?.nutrients ?? [];
+    const cats: string[] = [];
+    for (const n of nutrients) {
+      const cat = n.category || 'Nutrition';
+      if (!cats.includes(cat)) cats.push(cat);
+    }
+    return cats;
+  }
+
+  nutrientsByCategory(category: string): Nutrient[] {
+    return this.result()?.nutrients?.filter((n) => (n.category || 'Nutrition') === category) ?? [];
   }
 }
