@@ -56,11 +56,45 @@ export interface ScanResult {
   dataIncomplete: boolean;
 }
 
+export interface InfoData {
+  algoVersion: string;
+  infantFormulaAlgoVersion: string;
+  rules: Array<{
+    code: string;
+    label: string;
+    description: string;
+    pointsImpact: number;
+    sourceName: string;
+    sourceUrl: string;
+    ageMinMonths: number | null;
+    ageMaxMonths: number | null;
+  }>;
+  scoreScale: Array<{
+    level: string;
+    min: number;
+    max: number;
+    label: string;
+    description: string;
+  }>;
+  infantFormulaRules: Array<{
+    code: string;
+    label: string;
+    points: number;
+    reason: string;
+    source: string;
+    category: string;
+  }>;
+  sources: Array<{ name: string; description: string; url: string }>;
+}
+
 @Injectable({ providedIn: 'root' })
 export class ScanService {
   private http = inject(HttpClient);
 
   scan(ean: string) {
     return this.http.get<ScanResult>('/api/scan/' + ean, { withCredentials: true });
+  }
+  getInfo() {
+    return this.http.get<InfoData>('/api/info', { withCredentials: true });
   }
 }

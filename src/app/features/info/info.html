@@ -1,0 +1,189 @@
+@if (data(); as d) {
+  <!-- Hero -->
+  <section class="np-info-hero">
+    <h1 class="np-info-hero__title">Comprendre le score</h1>
+    <p class="np-info-hero__subtitle">
+      NutriPetit calcule un score nutritionnel adapté à votre bébé en s'appuyant sur les
+      recommandations officielles ANSES, PNNS 4, OMS, EFSA et la réglementation européenne.
+    </p>
+    <div class="np-info-hero__version">
+      <span>Algorithme v{{ d.algoVersion }} — {{ d.rules.length }} règles actives</span>
+    </div>
+  </section>
+
+  <!-- Échelle -->
+  <section class="np-info-section">
+    <h2 class="np-info-section__title">L'échelle de score</h2>
+    <p class="np-info-section__lead">
+      Chaque produit reçoit une note de 0 à 100, calculée à partir d'une base de 100 points modulée
+      par l'application des règles.
+    </p>
+    <div class="np-info-scale">
+      @for (tier of d.scoreScale; track tier.level) {
+        <div class="np-info-scale-item">
+          <div [class]="'np-info-scale-item__dot np-info-scale-item__dot--' + tier.level"></div>
+          <div class="np-info-scale-item__content">
+            <p class="np-info-scale-item__range">{{ tier.min }}–{{ tier.max }}</p>
+            <p class="np-info-scale-item__label">{{ tier.label }}</p>
+            <p class="np-info-scale-item__desc">{{ tier.description }}</p>
+          </div>
+        </div>
+      }
+    </div>
+  </section>
+
+  <!-- Règles DB -->
+  <section class="np-info-section">
+    <h2 class="np-info-section__title">Nos règles de scoring</h2>
+    <p class="np-info-section__lead">
+      Toutes nos règles sont versionnées et sourcées. Chaque règle pointe vers sa référence
+      officielle vérifiable.
+    </p>
+    <div class="np-info-rules">
+      @for (rule of d.rules; track rule.code) {
+        <article class="np-info-rule">
+          <div class="np-info-rule__header">
+            <h3 class="np-info-rule__label">{{ rule.label }}</h3>
+            <span
+              [class]="
+                'np-info-rule__impact np-info-rule__impact--' +
+                (rule.pointsImpact < 0
+                  ? 'negative'
+                  : rule.pointsImpact > 0
+                    ? 'positive'
+                    : 'neutral')
+              "
+            >
+              {{ rule.pointsImpact > 0 ? '+' : '' }}{{ rule.pointsImpact }} pts
+            </span>
+          </div>
+          <p class="np-info-rule__description">{{ rule.description }}</p>
+          <div class="np-info-rule__meta">
+            <span class="np-info-rule__age">
+              <app-icon name="clock" class="np-info-rule__icon" />
+              @if (rule.ageMinMonths === null && rule.ageMaxMonths === null) {
+                Tous âges
+              } @else {
+                {{ rule.ageMinMonths ?? 0 }}-{{ rule.ageMaxMonths ?? 36 }} mois
+              }
+            </span>
+            @if (rule.sourceUrl) {
+              <a
+                [href]="rule.sourceUrl"
+                target="_blank"
+                rel="noopener noreferrer"
+                class="np-info-rule__source"
+              >
+                <app-icon name="external-link" class="np-info-rule__icon" />
+                {{ rule.sourceName }}
+              </a>
+            }
+          </div>
+        </article>
+      }
+    </div>
+  </section>
+
+  <!-- Règles lait infantile -->
+  <section class="np-info-section">
+    <h2 class="np-info-section__title">Algorithme spécifique laits infantiles</h2>
+    <div class="np-info-hero__version">
+      <span>{{ d.infantFormulaAlgoVersion }}</span>
+    </div>
+    <p class="np-info-section__lead">
+      Les laits infantiles sont strictement réglementés par le Règlement UE 2016/127. Notre
+      algorithme dédié compare la qualité optionnelle entre produits déjà conformes.
+    </p>
+    <div class="np-info-rules">
+      @for (rule of d.infantFormulaRules; track rule.code) {
+        <article class="np-info-rule">
+          <div class="np-info-rule__header">
+            <h3 class="np-info-rule__label">{{ rule.label }}</h3>
+            <span
+              [class]="
+                'np-info-rule__impact np-info-rule__impact--' +
+                (rule.points < 0 ? 'negative' : rule.points > 0 ? 'positive' : 'neutral')
+              "
+            >
+              {{ rule.points > 0 ? '+' : '' }}{{ rule.points }} pts
+            </span>
+          </div>
+          <p class="np-info-rule__description">{{ rule.reason }}</p>
+          <div class="np-info-rule__meta">
+            <span class="np-info-rule__source">
+              <app-icon name="book-open" class="np-info-rule__icon" />
+              {{ rule.source }}
+            </span>
+          </div>
+        </article>
+      }
+    </div>
+  </section>
+
+  <!-- Sources -->
+  <section class="np-info-section">
+    <h2 class="np-info-section__title">Nos sources officielles</h2>
+    <p class="np-info-section__lead">
+      Tout notre algorithme s'appuie sur des organismes reconnus en nutrition et santé infantile.
+    </p>
+    <div class="np-info-sources">
+      @for (source of d.sources; track source.name) {
+        <a [href]="source.url" target="_blank" rel="noopener noreferrer" class="np-info-source">
+          <div class="np-info-source__name">{{ source.name }}</div>
+          <div class="np-info-source__desc">{{ source.description }}</div>
+          <app-icon name="external-link" class="np-info-source__arrow" />
+        </a>
+      }
+    </div>
+  </section>
+  <!-- Pourquoi pas Nutri-Score adulte -->
+  <section class="np-info-section np-info-section--highlight">
+    <h2 class="np-info-section__title">Pourquoi pas le Nutri-Score adulte ?</h2>
+    <p class="np-info-section__lead">
+      Les besoins nutritionnels d'un bébé sont fondamentalement différents de ceux d'un adulte.
+      Santé publique France elle-même reconnaît que le Nutri-Score classique n'est pas adapté à
+      l'alimentation infantile.
+    </p>
+    <div class="np-info-comparison">
+      <div class="np-info-comparison__col">
+        <div class="np-info-comparison__icon-wrapper np-info-comparison__icon-wrapper--bad">
+          <app-icon name="x" class="np-info-comparison__icon" />
+        </div>
+        <h3 class="np-info-comparison__title">Nutri-Score classique</h3>
+        <p class="np-info-comparison__text">
+          Conçu pour les adultes. Tolère des seuils de sel et sucre inadaptés aux nourrissons.
+          Pénalise les bonnes matières grasses pourtant essentielles au développement du bébé.
+        </p>
+      </div>
+      <div class="np-info-comparison__col">
+        <div class="np-info-comparison__icon-wrapper np-info-comparison__icon-wrapper--good">
+          <app-icon name="check" class="np-info-comparison__icon" />
+        </div>
+        <h3 class="np-info-comparison__title">NutriPetit</h3>
+        <p class="np-info-comparison__text">
+          Spécialement calibré pour les 0-3 ans, avec des règles qui s'adaptent à l'âge de votre
+          enfant et qui s'appuient sur les avis ANSES 2019 et PNNS 4.
+        </p>
+      </div>
+    </div>
+  </section>
+  <!-- Disclaimer complet -->
+  <section class="np-info-section">
+    <aside class="np-disclaimer" role="note" aria-label="Avertissement santé">
+      <div class="np-disclaimer__icon-wrapper">
+        <app-icon name="shield-alert" class="np-disclaimer__icon" />
+      </div>
+      <div class="np-disclaimer__content">
+        <p class="np-disclaimer__title">Avertissement santé</p>
+        <p class="np-disclaimer__text">
+          NutriPetit fournit une <strong>analyse informative</strong> basée sur les recommandations
+          officielles ANSES, OMS, EFSA et PNNS. Ce score
+          <strong>ne constitue pas un avis médical</strong> et ne remplace en aucun cas l'avis d'un
+          professionnel de santé. <strong>Consultez votre pédiatre</strong> pour toute question
+          concernant l'alimentation de votre enfant, en particulier en cas d'allergie, intolérance
+          ou condition médicale particulière.
+        </p>
+      </div>
+    </aside>
+  </section>
+}
