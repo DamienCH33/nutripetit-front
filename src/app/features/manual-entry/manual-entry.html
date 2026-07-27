@@ -1,0 +1,28 @@
+<div class="np-manual-entry">
+  <header class="np-manual-entry__header">
+    <h1 class="np-manual-entry__title">
+      <app-icon name="scan-barcode" class="np-manual-entry__title-icon" />
+      Saisie manuelle
+    </h1>
+    <p class="np-manual-entry__lead">Entre le code-barres du produit (13 chiffres).</p>
+  </header>
+
+  <div class="np-manual-entry__form">
+    <label for="ean-input" class="np-manual-entry__label">Code-barres</label>
+    <input
+      type="text"
+      id="ean-input"
+      class="np-manual-entry__input"
+      inputmode="numeric"
+      maxlength="13"
+      placeholder="3041091342034"
+      [ngModel]="ean()"
+      (ngModelChange)="ean.set($event)"
+      (keyup.enter)="submit()"
+    />
+    <button type="button" class="np-manual-entry__btn" (click)="submit()">
+      <app-icon name="list-checks" class="np-manual-entry__btn-icon" />
+      Analyser le produit
+    </button>
+  </div>
+</div>

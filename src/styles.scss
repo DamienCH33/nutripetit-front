@@ -14,9 +14,6 @@
 @use 'legacy-styles/components/pwa-install';
 @use 'legacy-styles/pages/home';
 
-/* Pages */
-@use 'legacy-styles/pages/product';
-
 body {
   font-family: var(--np-font-family);
   margin: 0;

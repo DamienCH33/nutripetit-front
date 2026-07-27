@@ -1,5 +1,13 @@
 <div class="np-product">
-  @if (result(); as r) {
+  @if (loading()) {
+    <p>Chargement…</p>
+  } @else if (error(); as e) {
+    <div class="np-scan-error">
+      <h2 class="np-scan-error__title">{{ e.title }}</h2>
+      <p class="np-scan-error__message">{{ e.message }}</p>
+      <a routerLink="/" class="np-scan-error__back">Retour à la recherche</a>
+    </div>
+  } @else if (result(); as r) {
     <app-product-header
       [name]="r.product.name"
       [brand]="r.product.brand"
@@ -200,7 +208,5 @@
         </a>
       }
     }
-  } @else {
-    <p>Chargement…</p>
   }
 </div>
