@@ -1,0 +1,26 @@
+<section class="np-app-hero">
+  <h1 class="np-app-hero__greeting">Bonjour.</h1>
+  <p class="np-app-hero__subtitle">Prêt à scanner ?</p>
+</section>
+
+<a routerLink="/profil-bebe" class="np-age-prompt">
+  <app-icon name="baby" class="np-age-prompt__icon" />
+  <span>Renseignez l'âge de votre enfant pour des analyses adaptées.</span>
+</a>
+
+<a routerLink="/scanner" class="np-app-scan-card">
+  <h2 class="np-app-scan-card__title">Scanner un produit</h2>
+  <div class="np-app-scan-card__icon-wrapper">
+    <app-icon name="scan-barcode" class="np-app-scan-card__icon" />
+  </div>
+  <p class="np-app-scan-card__description">
+    Pointez votre caméra vers le code-barres pour une analyse instantanée.
+  </p>
+</a>
+
+<div class="np-app-separator">ou</div>
+
+<a routerLink="/saisie-manuelle" class="np-app-manual">
+  <app-icon name="list-checks" class="np-app-manual__icon" />
+  <span>Saisie manuelle du code-barres</span>
+</a>
