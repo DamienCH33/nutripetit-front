@@ -1,0 +1,54 @@
+@if (data(); as d) {
+  <div class="np-history">
+    <header class="np-history__header">
+      <h1 class="np-history__title">
+        <app-icon name="clock" class="np-history__title-icon" />
+        Mon historique
+      </h1>
+      <p class="np-history__lead">
+        Vos derniers produits scannés. Les données sont conservées 13 mois maximum.
+      </p>
+    </header>
+
+    @if (d.results.length === 0) {
+      <div class="np-history__empty">
+        <div class="np-history__empty-icon-wrapper">
+          <app-icon name="scan-barcode" class="np-history__empty-icon" />
+        </div>
+        <p class="np-history__empty-title">Aucun scan pour le moment</p>
+        <p class="np-history__empty-message">
+          Scannez votre premier produit pour commencer à construire votre historique.
+        </p>
+        <a routerLink="/scanner" class="np-history__cta">
+          <app-icon name="scan-barcode" class="np-history__cta-icon" />
+          Scanner un produit
+        </a>
+      </div>
+    } @else {
+      <div class="np-history__list">
+        @for (result of d.results; track result.product.ean) {
+          <a [routerLink]="['/scan', result.product.ean]" class="np-history__item">
+            <div class="np-history__item-image">
+              @if (result.product.imageUrl) {
+                <img [src]="result.product.imageUrl" [alt]="result.product.name" />
+              } @else {
+                <app-icon name="scan-barcode" class="np-history__item-placeholder" />
+              }
+            </div>
+            <div class="np-history__item-main">
+              <p class="np-history__item-name">{{ result.product.name }}</p>
+              <p class="np-history__item-brand">{{ result.product.brand ?? '-' }}</p>
+              <p class="np-history__item-date">
+                {{ result.calculatedAt | date: 'dd/MM/yyyy à HH:mm' }}
+              </p>
+            </div>
+            <div [class]="'np-history__item-score np-history__item-score--' + result.level">
+              <span class="np-history__item-score-value">{{ result.finalScore }}</span>
+              <span class="np-history__item-score-total">/100</span>
+            </div>
+          </a>
+        }
+      </div>
+    }
+  </div>
+}

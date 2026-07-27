@@ -87,6 +87,23 @@ export interface InfoData {
   sources: Array<{ name: string; description: string; url: string }>;
 }
 
+export interface HistoryData {
+  results: Array<{
+    product: {
+      ean: string;
+      name: string;
+      brand: string | null;
+      imageUrl: string | null;
+    };
+    finalScore: number;
+    level: string;
+    calculatedAt: string;
+  }>;
+  total: number;
+  page: number;
+  lastPage: number;
+}
+
 @Injectable({ providedIn: 'root' })
 export class ScanService {
   private http = inject(HttpClient);
@@ -96,5 +113,8 @@ export class ScanService {
   }
   getInfo() {
     return this.http.get<InfoData>('/api/info', { withCredentials: true });
+  }
+  getHistory() {
+    return this.http.get<HistoryData>('/api/history', { withCredentials: true });
   }
 }
