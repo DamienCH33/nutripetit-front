@@ -106,6 +106,14 @@ export interface HistoryData {
   lastPage: number;
 }
 
+export interface AgeRange {
+  code: string;
+  label: string;
+  minMonths: number;
+  maxMonths: number;
+  description: string;
+}
+
 @Injectable({ providedIn: 'root' })
 export class ScanService {
   private http = inject(HttpClient);
@@ -118,5 +126,8 @@ export class ScanService {
   }
   getHistory() {
     return this.http.get<HistoryData>('/api/history', { withCredentials: true });
+  }
+  getBabyProfile() {
+    return this.http.get<AgeRange[]>('/api/baby-profile', { withCredentials: true });
   }
 }

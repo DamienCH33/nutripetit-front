@@ -1,0 +1,88 @@
+<section class="np-baby-hero">
+  <div class="np-baby-hero__avatar">
+    <app-icon name="baby" class="np-baby-hero__avatar-icon" />
+  </div>
+  <h1 class="np-baby-hero__title">Mon enfant</h1>
+  <p class="np-baby-hero__subtitle">
+    Indiquez l'âge de votre enfant pour adapter le scoring nutritionnel.
+  </p>
+</section>
+
+@if (showSaved() && currentRange(); as r) {
+  <div class="np-baby-current">
+    <div class="np-baby-current__header">
+      <app-icon name="check-circle-2" class="np-baby-current__icon" />
+      <span>Âge enregistré</span>
+    </div>
+    <p class="np-baby-current__age">{{ age() }} mois</p>
+    <p class="np-baby-current__range">{{ r.label }}</p>
+  </div>
+}
+
+<section class="np-baby-form">
+  <div class="np-baby-field">
+    <label for="baby-age" class="np-baby-field__label">Âge de votre enfant</label>
+    <div class="np-baby-age-display">
+      <span class="np-baby-age-display__value">{{ age() }}</span>
+      <span class="np-baby-age-display__unit">mois</span>
+    </div>
+    <input
+      type="range"
+      min="0"
+      max="36"
+      step="1"
+      [value]="age()"
+      (input)="onAgeChange(+$any($event.target).value)"
+      class="np-baby-field__slider"
+    />
+    <div class="np-baby-slider-marks">
+      <span>0</span>
+      <span>12</span>
+      <span>24</span>
+      <span>36</span>
+    </div>
+  </div>
+
+  @if (currentRange(); as r) {
+    <div class="np-baby-range-card">
+      <div class="np-baby-range-card__icon-wrapper">
+        <app-icon name="calendar" class="np-baby-range-card__icon" />
+      </div>
+      <div class="np-baby-range-card__content">
+        <p class="np-baby-range-card__label">{{ r.label }}</p>
+        <p class="np-baby-range-card__desc">{{ r.description }}</p>
+      </div>
+    </div>
+  }
+
+  <button type="button" class="np-baby-reset" (click)="reset()">
+    <app-icon name="trash-2" class="np-baby-reset__icon" />
+    Effacer le profil
+  </button>
+</section>
+
+<section class="np-baby-rgpd">
+  <div class="np-baby-rgpd__icon-wrapper">
+    <app-icon name="shield-check" class="np-baby-range-card__icon" />
+  </div>
+  <div>
+    <span class="np-baby-rgpd__title">Données privées</span>
+    <span class="np-baby-rgpd__text"
+      >Stockage local uniquement, aucune donnée envoyée à nos serveurs.</span
+    >
+  </div>
+</section>
+
+<section class="np-baby-info">
+  <div class="np-baby-info__head">
+    <div class="np-baby-info__icon-wrapper">
+      <app-icon name="info" class="np-baby-info__icon" />
+    </div>
+    <h3 class="np-baby-info__title">Pourquoi l'âge est important ?</h3>
+  </div>
+  <p class="np-baby-info__text">
+    Les besoins nutritionnels évoluent fortement entre 0 et 3 ans. NutriPetit adapte ses barèmes de
+    scoring selon la tranche d'âge de votre enfant, conformément aux recommandations ANSES et PNNS
+    4.
+  </p>
+</section>

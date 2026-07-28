@@ -1,7 +1,3 @@
-/**
- * NutriPetit - Page Profil bébé
- */
-
 /* HERO */
 .np-baby-hero {
   padding: var(--np-spacing-6) 0 var(--np-spacing-4);
@@ -20,12 +16,6 @@
   box-shadow: var(--np-shadow-orange);
 }
 
-.np-baby-hero__avatar-icon {
-  width: 36px;
-  height: 36px;
-  color: var(--np-white);
-}
-
 .np-baby-hero__title {
   font-size: var(--np-font-size-2xl);
   font-weight: var(--np-font-weight-bold);
@@ -41,6 +31,16 @@
   margin: 0 auto;
 }
 
+.np-baby-hero__avatar-icon {
+  width: 40px;
+  height: 40px;
+  color: var(--np-white);
+}
+
+.np-baby-hero__avatar ::ng-deep svg {
+  width: 40px;
+  height: 40px;
+}
 /* CARD PROFIL ACTUEL */
 .np-baby-current {
   padding: var(--np-spacing-4);
@@ -180,7 +180,7 @@
   padding: var(--np-spacing-4);
   background-color: var(--np-white);
   border-radius: var(--np-radius-md);
-  border: 1px solid rgba(0,0,0,0.04);
+  border: 1px solid rgba(0, 0, 0, 0.04);
 }
 
 .np-baby-range-card__icon-wrapper {
@@ -232,10 +232,12 @@
   border-radius: var(--np-radius-pill);
   font-size: var(--np-font-size-sm);
   font-weight: var(--np-font-weight-medium);
-  box-shadow: 0 8px 24px rgba(0,0,0,0.2);
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.2);
   opacity: 0;
   z-index: 1000;
-  transition: opacity 300ms ease-out, transform 300ms ease-out;
+  transition:
+    opacity 300ms ease-out,
+    transform 300ms ease-out;
 }
 
 .np-baby-toast--visible {
@@ -361,4 +363,10 @@
   font-size: var(--np-font-size-xs);
   color: var(--np-gray-700);
   line-height: 1.5;
+}
+.np-baby-info__head {
+  display: flex;
+  align-items: center;
+  gap: var(--np-spacing-2);
+  margin-bottom: var(--np-spacing-2);
 }
