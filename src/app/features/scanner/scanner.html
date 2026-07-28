@@ -1,0 +1,41 @@
+<div class="np-scanner">
+  <header class="np-scanner__header">
+    <h1 class="np-scanner__title">
+      <app-icon name="scan-line" class="np-scanner__title-icon" />
+      Scanner un produit
+    </h1>
+    <p class="np-scanner__lead">Pointez votre caméra vers le code-barres EAN-13 du produit.</p>
+  </header>
+
+  <div class="np-scanner__viewport">
+    <video #videoElement class="np-scanner__video" playsinline></video>
+    <div class="np-scanner__overlay">
+      <div class="np-scanner__frame"></div>
+    </div>
+  </div>
+
+  <p class="np-scanner__status">{{ status() }}</p>
+
+  @if (error(); as e) {
+    <p class="np-scanner__error">{{ e }}</p>
+  }
+
+  <div class="np-scanner__actions">
+    <button type="button" class="np-scanner__btn np-scanner__btn--secondary" (click)="stop()">
+      <app-icon name="square" class="np-scanner__btn-icon" /> Arrêter
+    </button>
+    <a routerLink="/saisie-manuelle" class="np-scanner__btn np-scanner__btn--ghost">
+      <app-icon name="keyboard" class="np-scanner__btn-icon" />
+      Saisie manuelle
+    </a>
+  </div>
+
+  <div class="np-scanner__help">
+    <p>
+      <app-icon name="info" class="np-scanner__help-icon" />
+      <strong>Astuce :</strong>
+      Tenez votre téléphone à environ 15-20 cm du code-barres, avec un bon éclairage. Pour les
+      boîtes courbées, ajustez l'angle pour aplatir le code.
+    </p>
+  </div>
+</div>
