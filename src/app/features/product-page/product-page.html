@@ -8,6 +8,28 @@
       <a routerLink="/" class="np-scan-error__back">Retour à la recherche</a>
     </div>
   } @else if (result(); as r) {
+    @if (r.criticalAlert; as alert) {
+      <aside class="np-critical-alert" role="alert">
+        <div class="np-critical-alert__icon-wrapper">
+          <app-icon name="alert-triangle" class="np-critical-alert__icon" />
+        </div>
+        <div class="np-critical-alert__content">
+          <p class="np-critical-alert__title">{{ alert.title }}</p>
+          <p class="np-critical-alert__message">{{ alert.message }}</p>
+          @if (alert.source_url) {
+            <a
+              [href]="alert.source_url"
+              target="_blank"
+              rel="noopener noreferrer"
+              class="np-critical-alert__source"
+            >
+              Source : {{ alert.source_name }}
+              <app-icon name="external-link" class="np-critical-alert__source-icon" />
+            </a>
+          }
+        </div>
+      </aside>
+    }
     <app-product-header
       [name]="r.product.name"
       [brand]="r.product.brand"

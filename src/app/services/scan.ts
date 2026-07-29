@@ -56,6 +56,7 @@ export interface ScanResult {
   babyAgeMonths: number | null;
   minAgeMonths: number | null;
   dataIncomplete: boolean;
+  criticalAlert: { title: string; message: string; source_name: string; source_url: string } | null;
 }
 
 export interface InfoData {
