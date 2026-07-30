@@ -3,10 +3,12 @@
   <p class="np-app-hero__subtitle">Prêt à scanner ?</p>
 </section>
 
-<a routerLink="/profil-bebe" class="np-age-prompt">
-  <app-icon name="baby" class="np-age-prompt__icon" />
-  <span>Renseignez l'âge de votre enfant pour des analyses adaptées.</span>
-</a>
+@if (!hasAge()) {
+  <a routerLink="/profil-bebe" class="np-age-prompt">
+    <app-icon name="baby" class="np-age-prompt__icon" />
+    <span>Renseignez l'âge de votre enfant pour des analyses adaptées.</span>
+  </a>
+}
 
 <a routerLink="/scanner" class="np-app-scan-card">
   <h2 class="np-app-scan-card__title">Scanner un produit</h2>
@@ -24,3 +26,45 @@
   <app-icon name="list-checks" class="np-app-manual__icon" />
   <span>Saisie manuelle du code-barres</span>
 </a>
+
+<section class="np-app-section">
+  <div class="np-app-section__header">
+    <h2 class="np-app-section__title">Vos derniers scans</h2>
+    @if (recentScans().length > 0) {
+      <a routerLink="/historique" class="np-app-section__link">Voir tout</a>
+    }
+  </div>
+
+  @for (scan of recentScans(); track scan.product.ean) {
+    <a [routerLink]="['/scan', scan.product.ean]" class="np-product-card">
+      <div class="np-product-card__image">
+        @if (scan.product.imageUrl) {
+          <img [src]="scan.product.imageUrl" [alt]="scan.product.name" />
+        } @else {
+          <app-icon name="package" class="np-product-card__image-icon" />
+        }
+      </div>
+
+      <div class="np-product-card__content">
+        <p class="np-product-card__brand">{{ scan.product.brand || '-' }}</p>
+        <p class="np-product-card__name">{{ scan.product.name }}</p>
+        <p class="np-product-card__date">{{ scan.calculatedAt | date: 'dd/MM/yyyy à HH:mm' }}</p>
+      </div>
+
+      <div class="np-mini-score">
+        <svg class="np-mini-score__svg" viewBox="0 0 48 48">
+          <circle class="np-mini-score__bg" cx="24" cy="24" r="20"></circle>
+          <circle
+            [class]="'np-mini-score__progress np-mini-score__progress--' + scan.level"
+            cx="24"
+            cy="24"
+            r="20"
+            stroke-dasharray="125.6"
+            [attr.stroke-dashoffset]="scoreOffset(scan.finalScore)"
+          ></circle>
+        </svg>
+        <span class="np-mini-score__value">{{ scan.finalScore }}</span>
+      </div>
+    </a>
+  }
+</section>

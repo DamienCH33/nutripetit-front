@@ -1,9 +1,15 @@
 <div class="np-pwa-shell">
   <app-pwa-header />
-
   <main class="np-pwa-main">
     <router-outlet />
+    <p class="np-disclaimer-compact">
+      <app-icon name="info" class="np-disclaimer-compact__icon" />
+      <span
+        >Analyse informative basée sur les recommandations officielles.
+        <strong>Ne remplace pas l'avis d'un pédiatre.</strong>
+        <a routerLink="/infos"> En savoir plus</a></span
+      >
+    </p>
   </main>
-
   <app-pwa-bottom-nav />
 </div>
