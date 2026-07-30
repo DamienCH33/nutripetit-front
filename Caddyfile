@@ -5,7 +5,7 @@
 		reverse_proxy http://nutripetit.railway.internal:8080
 	}
 
-	handle /app/* {
+	handle_path /app/* {
 		root * /srv
 		try_files {path} /index.html
 		file_server
