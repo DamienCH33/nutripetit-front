@@ -1,5 +1,6 @@
 import { Injectable, inject } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
+import { environment } from '../../environments/environment';
 
 export interface Rule {
   rule_code: string;
@@ -118,17 +119,18 @@ export interface AgeRange {
 @Injectable({ providedIn: 'root' })
 export class ScanService {
   private http = inject(HttpClient);
+  private readonly api = environment.apiUrl + '/api';
 
   scan(ean: string) {
-    return this.http.get<ScanResult>('/api/scan/' + ean, { withCredentials: true });
+    return this.http.get<ScanResult>(`${this.api}/scan/${ean}`, { withCredentials: true });
   }
   getInfo() {
-    return this.http.get<InfoData>('/api/info', { withCredentials: true });
+    return this.http.get<InfoData>(`${this.api}/info`, { withCredentials: true });
   }
   getHistory() {
-    return this.http.get<HistoryData>('/api/history', { withCredentials: true });
+    return this.http.get<HistoryData>(`${this.api}/history`, { withCredentials: true });
   }
   getBabyProfile() {
-    return this.http.get<AgeRange[]>('/api/baby-profile', { withCredentials: true });
+    return this.http.get<AgeRange[]>(`${this.api}/baby-profile`, { withCredentials: true });
   }
 }
