@@ -1,6 +1,13 @@
 :{$PORT:8080} {
-	root * /srv
 	encode gzip
-	try_files {path} /index.html
-	file_server
+
+	handle /api/* {
+		reverse_proxy http://nutripetit.railway.internal:8080
+	}
+
+	handle {
+		root * /srv
+		try_files {path} /index.html
+		file_server
+	}
 }
