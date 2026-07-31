@@ -67,6 +67,7 @@ export interface ScanResult {
   criticalAlert: { title: string; message: string; source_name: string; source_url: string } | null;
   scoresByAge: AgeScore[];
   additives: Additive[];
+  carbonFootprint: CarbonFootprint | null;
 }
 
 export interface InfoData {
@@ -128,6 +129,12 @@ export interface AgeRange {
 export interface Additive {
   code: string;
   name: string;
+}
+
+export interface CarbonFootprint {
+  value: number;
+  unit: string;
+  car_km: number;
 }
 
 @Injectable({ providedIn: 'root' })

@@ -257,6 +257,19 @@
           </p>
         </div>
       </article>
+
+      @if (r.carbonFootprint; as carbon) {
+        <article class="np-carbon-card">
+          <p class="np-carbon-card__title">
+            <app-icon name="leaf" class="np-carbon-card__icon" />
+            Empreinte carbone
+          </p>
+          <p class="np-carbon-card__value">{{ carbon.value }} {{ carbon.unit }}</p>
+          <p class="np-carbon-card__equivalent">
+            Équivaut à environ {{ carbon.car_km }} km en voiture essence.
+          </p>
+        </article>
+      }
     }
 
     @if (activeTab() === 'sources') {
