@@ -154,4 +154,20 @@ export class ScanService {
   getBabyProfile() {
     return this.http.get<AgeRange[]>(`${this.api}/baby-profile`, { withCredentials: true });
   }
+  clearHistory() {
+    const token = btoa(String.fromCharCode(...crypto.getRandomValues(new Uint8Array(18))));
+
+    const isHttps = window.location.protocol === 'https:';
+    const base = 'submit_' + token + '=submit; path=/; samesite=strict';
+    document.cookie = isHttps ? '__Host-' + base + '; secure' : base;
+
+    return this.http.post(
+      `${this.api}/history/clear`,
+      {},
+      {
+        headers: { submit: token },
+        withCredentials: true,
+      },
+    );
+  }
 }

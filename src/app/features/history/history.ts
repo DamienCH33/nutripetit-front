@@ -16,6 +16,20 @@ export class History implements OnInit {
   data = signal<HistoryData | null>(null);
 
   ngOnInit(): void {
+    this.load();
+  }
+
+  private load(): void {
     this.scanService.getHistory().subscribe((d) => this.data.set(d));
+  }
+
+  onClear(): void {
+    if (!confirm("Effacer tout l'historique ? Cette action est irréversible.")) {
+      return;
+    }
+    this.scanService.clearHistory().subscribe({
+      next: () => this.load(),
+      error: () => alert('La suppression a échoué. Réessaie.'),
+    });
   }
 }

@@ -8,6 +8,18 @@
       <p class="np-history__lead">
         Vos derniers produits scannés. Les données sont conservées 13 mois maximum.
       </p>
+      @if (d.results.length > 0) {
+        <div class="np-history__clear">
+          <button
+            type="button"
+            class="np-btn np-btn--ghost np-history__clear-btn"
+            (click)="onClear()"
+          >
+            <app-icon name="trash-2" class="np-history__clear-icon" />
+            Effacer l'historique
+          </button>
+        </div>
+      }
     </header>
 
     @if (d.results.length === 0) {
