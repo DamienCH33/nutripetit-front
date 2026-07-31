@@ -8,6 +8,21 @@
       <a routerLink="/" class="np-scan-error__back">Retour à la recherche</a>
     </div>
   } @else if (result(); as r) {
+    @if (r.isInfantFormula) {
+      <aside class="np-formula-notice" role="note">
+        <div class="np-formula-notice__icon-wrapper">
+          <app-icon name="baby" class="np-formula-notice__icon" />
+        </div>
+        <div class="np-formula-notice__content">
+          <p class="np-formula-notice__title">Lait infantile — Notation spécifique</p>
+          <p class="np-formula-notice__message">
+            Tous les laits infantiles vendus en Europe sont strictement réglementés et garantissent
+            les apports nécessaires. Le choix d'un lait infantile doit faire l'objet d'un avis
+            pédiatrique.
+          </p>
+        </div>
+      </aside>
+    }
     @if (r.criticalAlert; as alert) {
       <aside class="np-critical-alert" role="alert">
         <div class="np-critical-alert__icon-wrapper">
@@ -37,7 +52,7 @@
       [imageUrl]="r.product.image_url"
     />
 
-    <app-score-circle [score]="r.finalScore" [level]="r.level" [levelLabel]="r.level" />
+    <app-score-circle [score]="r.finalScore" [level]="r.level" [levelLabel]="r.levelLabel" />
 
     <!-- Barre d'onglets -->
     <div class="np-tabs np-tabs--scrollable" role="tablist">
@@ -148,7 +163,12 @@
       <div class="np-nutrients-info">
         <p class="np-nutrients-info__text">
           <app-icon name="info" class="np-nutrients-info__icon" />
-          Valeurs comparées aux seuils recommandés pour les tout-petits.
+          @if (r.isInfantFormula) {
+            Critères encadrés par le Règlement UE 2016/127. Les valeurs « N/D » sont absentes de la
+            fiche Open Food Facts.
+          } @else {
+            Les seuils affichés sont adaptés aux nourrissons selon les recommandations ANSES.
+          }
         </p>
       </div>
       @if (r.nutrients.length > 0) {
@@ -164,6 +184,15 @@
     }
 
     @if (activeTab() === 'age') {
+      @if (r.isInfantFormula) {
+        <div class="np-age-info">
+          <p class="np-age-info__text">
+            <app-icon name="info" class="np-age-info__icon" />
+            Les laits infantiles sont formulés pour une tranche d'âge précise. Leur qualité ne varie
+            pas selon l'âge du bébé dans cette tranche.
+          </p>
+        </div>
+      }
       <p class="np-age-evolution__intro">
         Le score s'adapte aux besoins nutritionnels par tranche d'âge selon l'ANSES et le PNNS 4.
       </p>
