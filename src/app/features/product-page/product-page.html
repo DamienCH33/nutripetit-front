@@ -67,6 +67,14 @@
       </button>
       <button
         type="button"
+        [class]="'np-tabs__tab' + (activeTab() === 'age' ? ' np-tabs__tab--active' : '')"
+        (click)="setTab('age')"
+      >
+        <app-icon name="calendar" class="np-tabs__icon" />
+        <span>Par âge</span>
+      </button>
+      <button
+        type="button"
         [class]="'np-tabs__tab' + (activeTab() === 'sources' ? ' np-tabs__tab--active' : '')"
         (click)="setTab('sources')"
       >
@@ -122,6 +130,18 @@
           </div>
         </details>
       }
+
+      @if (r.additives.length > 0) {
+        <div class="np-additives-section">
+          <h3 class="np-additives-section__title">Additifs présents ({{ r.additives.length }})</h3>
+          @for (additive of r.additives; track additive.code) {
+            <article class="np-additive-card">
+              <span class="np-additive-card__code">{{ additive.code }}</span>
+              <span class="np-additive-card__name">{{ additive.name }}</span>
+            </article>
+          }
+        </div>
+      }
     }
 
     @if (activeTab() === 'nutrients') {
@@ -140,6 +160,34 @@
         }
       } @else {
         <p>Données nutritionnelles non disponibles pour ce produit.</p>
+      }
+    }
+
+    @if (activeTab() === 'age') {
+      <p class="np-age-evolution__intro">
+        Le score s'adapte aux besoins nutritionnels par tranche d'âge selon l'ANSES et le PNNS 4.
+      </p>
+      @if (r.scoresByAge.length > 0) {
+        <div class="np-age-evolution">
+          @for (entry of r.scoresByAge; track entry.months) {
+            <div
+              class="np-age-evolution__row"
+              [class.np-age-evolution__row--active]="entry.months === r.babyAgeMonths"
+            >
+              <div class="np-age-evolution__age">{{ entry.months }} mois</div>
+              <div class="np-age-evolution__bar">
+                <div
+                  [class]="'np-age-evolution__fill np-age-evolution__fill--' + entry.level"
+                  [style.width.%]="entry.score"
+                ></div>
+              </div>
+              <div class="np-age-evolution__score">
+                <span class="np-age-evolution__value">{{ entry.score }}</span>
+                <span class="np-age-evolution__label">{{ entry.label }}</span>
+              </div>
+            </div>
+          }
+        </div>
       }
     }
 

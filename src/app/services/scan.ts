@@ -33,6 +33,13 @@ export interface Nutrient {
   reference: string;
 }
 
+export interface AgeScore {
+  months: number;
+  score: number;
+  level: string;
+  label: string;
+}
+
 export interface ScanResult {
   product: {
     ean: string;
@@ -58,6 +65,8 @@ export interface ScanResult {
   minAgeMonths: number | null;
   dataIncomplete: boolean;
   criticalAlert: { title: string; message: string; source_name: string; source_url: string } | null;
+  scoresByAge: AgeScore[];
+  additives: Additive[];
 }
 
 export interface InfoData {
@@ -114,6 +123,11 @@ export interface AgeRange {
   minMonths: number;
   maxMonths: number;
   description: string;
+}
+
+export interface Additive {
+  code: string;
+  name: string;
 }
 
 @Injectable({ providedIn: 'root' })
