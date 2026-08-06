@@ -18,7 +18,9 @@
           <p class="np-formula-notice__message">
             Tous les laits infantiles vendus en Europe sont strictement réglementés et garantissent
             les apports nécessaires. Le choix d'un lait infantile doit faire l'objet d'un avis
-            pédiatrique.
+            pédiatrique. Le score reflète uniquement des critères optionnels de qualité (bio, sans
+            huile de palme, prébiotiques…) : un lait « conforme et sûr » reste parfaitement adapté à
+            votre enfant. Ne changez jamais de lait sans avis médical.
           </p>
         </div>
       </aside>
@@ -160,26 +162,41 @@
     }
 
     @if (activeTab() === 'nutrients') {
-      <div class="np-nutrients-info">
-        <p class="np-nutrients-info__text">
-          <app-icon name="info" class="np-nutrients-info__icon" />
-          @if (r.isInfantFormula) {
-            Critères encadrés par le Règlement UE 2016/127. Les valeurs « N/D » sont absentes de la
-            fiche Open Food Facts.
-          } @else {
-            Les seuils affichés sont adaptés aux nourrissons selon les recommandations ANSES.
-          }
-        </p>
-      </div>
-      @if (r.nutrients.length > 0) {
-        @for (category of nutrientCategories(); track category) {
-          <h3 class="np-nutrients-category">{{ category }}</h3>
-          @for (nutrient of nutrientsByCategory(category); track nutrient.name) {
-            <app-nutrient-gauge [nutrient]="nutrient" />
-          }
-        }
+      @if (r.isInfantFormula) {
+        <!-- Laits : pas de tableau. Valeurs OFF = poudre (non comparables aux repères
+         réglementaires en reconstitué) et moyenne de catégorie non discriminante.
+         Encart pédagogique adapté à l'âge à la place. -->
+        <div class="np-nutrients-info">
+          <p class="np-nutrients-info__text">
+            <app-icon name="info" class="np-nutrients-info__icon" />
+            Les laits infantiles ont une composition strictement encadrée par le Règlement UE
+            2016/127 : elle varie très peu d'une marque à l'autre. Les valeurs des bases publiques
+            concernent la poudre et ne sont pas comparables aux repères réglementaires, exprimés
+            pour le lait reconstitué.
+            @if (r.infantFormulaReference; as ref) {
+              À titre indicatif, un lait {{ ref.label }} reconstitué apporte environ
+              {{ ref.energy }} kcal et {{ ref.proteins }} g de protéines pour 100 ml (référence :
+              table Ciqual 2025, ANSES).
+            }
+          </p>
+        </div>
       } @else {
-        <p>Données nutritionnelles non disponibles pour ce produit.</p>
+        <div class="np-nutrients-info">
+          <p class="np-nutrients-info__text">
+            <app-icon name="info" class="np-nutrients-info__icon" />
+            Les seuils affichés sont adaptés aux nourrissons selon les recommandations ANSES.
+          </p>
+        </div>
+        @if (r.nutrients.length > 0) {
+          @for (category of nutrientCategories(); track category) {
+            <h3 class="np-nutrients-category">{{ category }}</h3>
+            @for (nutrient of nutrientsByCategory(category); track nutrient.name) {
+              <app-nutrient-gauge [nutrient]="nutrient" />
+            }
+          }
+        } @else {
+          <p>Données nutritionnelles non disponibles pour ce produit.</p>
+        }
       }
     }
 

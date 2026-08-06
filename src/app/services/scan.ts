@@ -68,6 +68,12 @@ export interface ScanResult {
   scoresByAge: AgeScore[];
   additives: Additive[];
   carbonFootprint: CarbonFootprint | null;
+  infantFormulaReference?: {
+    type: string;
+    label: string;
+    energy: number;
+    proteins: number;
+  } | null;
 }
 
 export interface InfoData {
