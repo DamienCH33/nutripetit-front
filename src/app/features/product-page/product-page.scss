@@ -961,3 +961,23 @@
   gap: var(--np-spacing-3);
   padding: 0 var(--np-spacing-4) var(--np-spacing-4);
 }
+
+.np-attribution {
+  margin-top: var(--np-spacing-6, 1.5rem);
+  padding: var(--np-spacing-4) 0 var(--np-spacing-2);
+  border-top: 1px solid var(--np-gray-200, #e5e7eb);
+}
+.np-attribution__text {
+  margin: 0;
+  font-size: 0.75rem;
+  line-height: 1.5;
+  color: var(--np-gray-600);
+  text-align: center;
+}
+.np-attribution__link {
+  color: var(--np-gray-600);
+  text-decoration: underline;
+}
+.np-attribution__link:hover {
+  color: var(--np-green-dark, #2e7d32);
+}
