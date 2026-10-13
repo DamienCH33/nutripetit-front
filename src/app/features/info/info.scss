@@ -303,3 +303,15 @@
   color: var(--np-gray-400);
   flex-shrink: 0;
 }
+
+.np-info-legal {
+  font-size: 0.8125rem;
+  line-height: 1.6;
+  text-align: center;
+  color: var(--np-gray-600);
+
+  a {
+    color: inherit;
+    text-decoration: underline;
+  }
+}
