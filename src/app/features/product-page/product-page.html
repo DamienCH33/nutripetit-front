@@ -5,6 +5,18 @@
     <div class="np-scan-error">
       <h2 class="np-scan-error__title">{{ e.title }}</h2>
       <p class="np-scan-error__message">{{ e.message }}</p>
+      @if (ean(); as code) {
+        <p class="np-scan-error__message">
+          Le produit est mal renseigné ? N'importe qui peut compléter sa fiche (catégorie, marque,
+          ingrédients) sur
+          <a
+            href="https://fr.openfoodfacts.org/produit/{{ code }}"
+            target="_blank"
+            rel="noopener noreferrer"
+            >Open Food Facts</a
+          >. NutriPetit la relira sous 24 h.
+        </p>
+      }
       <a routerLink="/" class="np-scan-error__back">Retour à la recherche</a>
     </div>
   } @else if (result(); as r) {
@@ -21,6 +33,22 @@
             pédiatrique. Le score reflète uniquement des critères optionnels de qualité (bio, sans
             huile de palme, prébiotiques…) : un lait « conforme et sûr » reste parfaitement adapté à
             votre enfant. Ne changez jamais de lait sans avis médical.
+          </p>
+        </div>
+      </aside>
+    }
+    @if (r.dataIncomplete) {
+      <aside class="np-formula-notice np-formula-notice--warning" role="note">
+        <div class="np-formula-notice__icon-wrapper">
+          <app-icon name="alert-triangle" class="np-formula-notice__icon" />
+        </div>
+        <div class="np-formula-notice__content">
+          <p class="np-formula-notice__title">Fiche incomplète — score partiel</p>
+          <p class="np-formula-notice__message">
+            Open Food Facts n'a pas tous les éléments de ce produit (liste d'ingrédients ou tableau
+            nutritionnel). Les critères qui en dépendent (sucres ajoutés, miel, additifs, allergènes,
+            sel…) n'ont pas pu être vérifiés : le score peut être trop favorable. Vérifiez
+            l'emballage.
           </p>
         </div>
       </aside>

@@ -7,6 +7,7 @@ import { ScanResult, ScanService, Rule, Nutrient } from '../../services/scan';
 import { Icon } from '../../shared/icon/icon';
 import { RouterLink } from '@angular/router';
 import { NutrientGauge } from '../nutrient-gauge/nutrient-gauge';
+import { BabyProfileService } from '../../services/baby-profile';
 
 @Component({
   selector: 'app-product-page',
@@ -18,6 +19,9 @@ import { NutrientGauge } from '../nutrient-gauge/nutrient-gauge';
 export class ProductPage implements OnInit {
   private scanService = inject(ScanService);
   private route = inject(ActivatedRoute);
+  private babyProfile = inject(BabyProfileService);
+
+  ean = signal<string | null>(null);
 
   result = signal<ScanResult | null>(null);
   activeTab = signal<string>('rules');
@@ -26,8 +30,9 @@ export class ProductPage implements OnInit {
 
   ngOnInit(): void {
     const ean = this.route.snapshot.paramMap.get('ean');
+    this.ean.set(ean);
     if (ean) {
-      this.scanService.scan(ean).subscribe({
+      this.scanService.scan(ean, this.babyProfile.getAge()).subscribe({
         next: (data) => {
           this.result.set(data);
           this.loading.set(false);
