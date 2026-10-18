@@ -26,6 +26,7 @@ export class Scanner implements AfterViewInit, OnDestroy {
   private codeReader?: BrowserMultiFormatReader;
   private controls?: IScannerControls;
   private activeStream?: MediaStream;
+  private destroyed = false;
 
   videoElement = viewChild<ElementRef<HTMLVideoElement>>('videoElement');
 
@@ -37,6 +38,7 @@ export class Scanner implements AfterViewInit, OnDestroy {
   }
 
   ngOnDestroy(): void {
+    this.destroyed = true;
     this.stop();
   }
 
@@ -113,11 +115,19 @@ export class Scanner implements AfterViewInit, OnDestroy {
       const stream = await navigator.mediaDevices.getUserMedia({
         video: { facingMode: { ideal: 'environment' } },
       });
+      // Référencé tout de suite : stop() doit pouvoir le couper même si play() échoue.
+      this.activeStream = stream;
+
+      // Page quittée pendant la demande d'autorisation : sans ce garde-fou,
+      // ngOnDestroy est déjà passé et la caméra resterait allumée.
+      if (this.destroyed) {
+        this.stop();
+        return;
+      }
 
       // 3. Brancher le flux sur la vidéo
       video.srcObject = stream;
       await video.play();
-      this.activeStream = stream;
       this.status.set('Pointez le code-barres dans le cadre.');
 
       // 4. Décoder en continu : à chaque code lu → handleResult
@@ -126,6 +136,9 @@ export class Scanner implements AfterViewInit, OnDestroy {
           this.handleResult(result.getText());
         }
       });
+      if (this.destroyed) {
+        this.stop();
+      }
     } catch (err: any) {
       if (err.name === 'NotAllowedError') {
         this.error.set('Accès caméra refusé. Activez-le dans les paramètres du navigateur.');

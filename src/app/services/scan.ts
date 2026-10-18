@@ -148,8 +148,13 @@ export class ScanService {
   private http = inject(HttpClient);
   private readonly api = environment.apiUrl + '/api';
 
-  scan(ean: string) {
-    return this.http.get<ScanResult>(`${this.api}/scan/${ean}`, { withCredentials: true });
+  /**
+   * L'âge (en mois) active les règles par tranche d'âge côté API (sel avant 1 an,
+   * miel, fer…). Sans lui, l'API n'applique que les règles valables de 0 à 36 mois.
+   */
+  scan(ean: string, ageMonths: number | null = null) {
+    const params: Record<string, string> = ageMonths === null ? {} : { age: String(ageMonths) };
+    return this.http.get<ScanResult>(`${this.api}/scan/${ean}`, { params, withCredentials: true });
   }
   getInfo() {
     return this.http.get<InfoData>(`${this.api}/info`, { withCredentials: true });
