@@ -27,6 +27,23 @@
   <span>Saisie manuelle du code-barres</span>
 </a>
 
+@if (showInstall()) {
+  <button type="button" class="np-landing-hero__cta-install np-app-install" (click)="onInstall()">
+    <app-icon name="download" class="np-app-install__icon" />
+    Installer l'application
+  </button>
+}
+
+@if (showIosHelp()) {
+  <div class="np-install-help" role="dialog" aria-label="Installer NutriPetit sur iPhone">
+    Pour installer : touchez <strong>Partager</strong> en bas de Safari, puis
+    <strong>« Sur l'écran d'accueil »</strong>.
+    <button type="button" class="np-install-help__ok" (click)="showIosHelp.set(false)">
+      Compris
+    </button>
+  </div>
+}
+
 <section class="np-app-section">
   <div class="np-app-section__header">
     <h2 class="np-app-section__title">Vos derniers scans</h2>
