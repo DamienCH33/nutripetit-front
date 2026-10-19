@@ -1,30 +1,40 @@
-import { Component, inject, OnInit, signal } from '@angular/core';
+import { Component, computed, inject, OnInit, signal } from '@angular/core';
 import { RouterLink } from '@angular/router';
 import { Icon } from '../../shared/icon/icon';
 import { ScanService, HistoryData } from '../../services/scan';
-import { BabyProfileService } from '../../services/baby-profile';
+import { BabyProfileService, ageLabel } from '../../services/baby-profile';
 import { PwaInstallService } from '../../services/pwa-install';
-import { DatePipe } from '@angular/common';
+import { shortLabel } from '../../shared/score-scale';
 
 @Component({
   selector: 'app-home',
   standalone: true,
-  imports: [RouterLink, Icon, DatePipe],
+  imports: [RouterLink, Icon],
   templateUrl: './home.html',
   styleUrl: './home.scss',
 })
 export class Home implements OnInit {
   private scanService = inject(ScanService);
-  private babyProfileService = inject(BabyProfileService);
+  protected profile = inject(BabyProfileService);
   protected pwa = inject(PwaInstallService);
   showIosHelp = signal(false);
 
   recentScans = signal<HistoryData['results']>([]);
+  ageText = computed(() => {
+    const age = this.profile.age();
+    return age === null ? '' : ageLabel(age);
+  });
 
   ngOnInit(): void {
-    this.scanService.getHistory().subscribe((data) => {
-      this.recentScans.set(data.results.slice(0, 3));
+    this.scanService.getHistory().subscribe({
+      next: (data) => this.recentScans.set(data.results.slice(0, 3)),
+      // Hors ligne ou API indisponible : l'accueil reste utilisable sans la liste.
+      error: () => this.recentScans.set([]),
     });
+  }
+
+  label(level: string): string {
+    return shortLabel(level);
   }
 
   /** Bouton visible si Chrome propose l'installation, ou sur iPhone hors appli. */
@@ -38,13 +48,5 @@ export class Home implements OnInit {
     } else if (this.pwa.isIos) {
       this.showIosHelp.set(true);
     }
-  }
-
-  hasAge(): boolean {
-    return this.babyProfileService.getAge() !== null;
-  }
-
-  scoreOffset(score: number): number {
-    return (100 - score) * 1.256;
   }
 }

@@ -1,21 +1,24 @@
-<nav class="np-bottom-nav" aria-label="Navigation principale">
-  <a routerLink="/" class="np-bottom-nav__item">
-    <app-icon name="house" class="np-bottom-nav__icon" />
+<nav class="nav" aria-label="Navigation principale">
+  <a
+    routerLink="/"
+    routerLinkActive="nav__item--on"
+    ariaCurrentWhenActive="page"
+    [routerLinkActiveOptions]="{ exact: true }"
+    class="nav__item"
+  >
+    <app-icon name="house" class="nav__icon" />
     <span>Accueil</span>
   </a>
-  <a routerLink="/historique" class="np-bottom-nav__item">
-    <app-icon name="clock" class="np-bottom-nav__icon" />
+  <a routerLink="/scanner" routerLinkActive="nav__item--on" ariaCurrentWhenActive="page" class="nav__item">
+    <app-icon name="scan-barcode" class="nav__icon" />
+    <span>Scanner</span>
+  </a>
+  <a routerLink="/historique" routerLinkActive="nav__item--on" ariaCurrentWhenActive="page" class="nav__item">
+    <app-icon name="clock" class="nav__icon" />
     <span>Historique</span>
   </a>
-  <a routerLink="/scanner" class="np-bottom-nav__scan" aria-label="Scanner un produit">
-    <app-icon name="scan-barcode" class="np-bottom-nav__scan-icon" />
-  </a>
-  <a routerLink="/infos" class="np-bottom-nav__item">
-    <app-icon name="info" class="np-bottom-nav__icon" />
-    <span>Infos</span>
-  </a>
-  <a routerLink="/profil-bebe" class="np-bottom-nav__item">
-    <app-icon name="baby" class="np-bottom-nav__icon" />
-    <span>Bébé</span>
+  <a routerLink="/infos" routerLinkActive="nav__item--on" ariaCurrentWhenActive="page" class="nav__item">
+    <app-icon name="info" class="nav__icon" />
+    <span>Notation</span>
   </a>
 </nav>

@@ -16,8 +16,16 @@
     margin: 0 auto;
     min-height: 100vh;
     min-height: 100dvh;
-    background-color: var(--np-cream-light);
-    padding-bottom: 100px;
+    background-color: var(--np-ground);
+    padding-bottom: 96px;
+}
+
+.np-pwa-shell--bare {
+    padding-bottom: 0;
+}
+
+.np-pwa-shell--bare .np-pwa-main {
+    padding: 0;
 }
 
 .np-pwa-main {
