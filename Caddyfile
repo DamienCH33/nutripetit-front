@@ -9,8 +9,31 @@
 
 	handle_path /app/* {
 		root * /srv
-		try_files {path} /index.html
-		file_server
+
+		# Fichiers (main-XXXX.js, styles-XXXX.css, images…) : servis tels quels,
+		# 404 s'ils n'existent pas. Avant, un fichier absent (ancien nom après un
+		# déploiement) recevait index.html en 200 : le navigateur refusait ce
+		# « JavaScript » en HTML et l'appli restait sur une page blanche.
+		@fichier path_regexp \.[A-Za-z0-9]+$
+		handle @fichier {
+			# Noms à empreinte : contenu immuable, cache 1 an.
+			# (seulement s'il existe : un 404 ne doit pas rester en cache un an)
+			@empreinte {
+				path_regexp -[A-Za-z0-9]{8,}\.(js|css|woff2)$
+				file
+			}
+			header @empreinte Cache-Control "public, max-age=31536000, immutable"
+			file_server
+		}
+
+		# Toute autre adresse (/app/, /app/scanner…) : l'appli Angular.
+		# Jamais en cache, sinon un ancien index.html pointe vers des fichiers
+		# supprimés par le déploiement suivant.
+		handle {
+			header Cache-Control "no-cache"
+			try_files {path} /index.html
+			file_server
+		}
 	}
 
 	handle {
