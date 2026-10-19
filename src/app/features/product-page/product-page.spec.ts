@@ -38,6 +38,7 @@ describe('ProductPage', () => {
   beforeEach(async () => {
     localStorage.clear();
     localStorage.setItem('nutripetit_baby_age', '9');
+    localStorage.setItem('nutripetit_baby_name', 'Léo');
 
     await TestBed.configureTestingModule({
       imports: [ProductPage],
@@ -86,5 +87,72 @@ describe('ProductPage', () => {
     expect(el.textContent).toContain('hors du périmètre');
     const link = el.querySelector(`a[href="https://fr.openfoodfacts.org/produit/${EAN}"]`);
     expect(link).not.toBeNull();
+  });
+
+  function rule(code: string, label: string, points: number) {
+    return {
+      rule_code: code, rule_label: label, points, reason: '', source_name: 'ANSES',
+      source_url: 'https://www.anses.fr', status: 'triggered',
+      category: points > 0 ? 'bonus' : points < 0 ? 'malus' : 'info', icon: '',
+    };
+  }
+
+  it('dit le verdict pour cet enfant, avec le score et la tranche', () => {
+    const el = answer(scanResult({ finalScore: 74, level: 'occasional', levelLabel: 'Occasionnel' }));
+    expect(el.querySelector('#pp-verdict')?.textContent).toContain('Occasionnel pour Léo');
+    expect(el.querySelector('[role="img"]')?.getAttribute('aria-label')).toBe(
+      'Score 74 sur 100, tranche « Occasionnel »',
+    );
+  });
+
+  it('montre les 3 raisons qui pèsent le plus, défauts en premier', () => {
+    answer(
+      scanResult({
+        appliedRules: [
+          rule('organic_certified', 'Certifié bio', 0),
+          rule('added_salt', 'Sel ajouté', -20),
+          rule('palm_oil', 'Huile de palme', -10),
+          rule('added_sugars', 'Sucres ajoutés', -30),
+          rule('soy_products', 'Soja', -4),
+        ],
+      }),
+    );
+    const why = fixture.componentInstance.why(fixture.componentInstance.result()!);
+    expect(why.map((w) => w.points)).toEqual(['−30', '−20', '−10']);
+  });
+
+  it('explique la base 60 sur un lait infantile', () => {
+    answer(
+      scanResult({
+        isInfantFormula: true, finalScore: 74, levelLabel: 'Très bon lait pour bébé',
+        appliedRules: [rule('formula_no_palm_oil', 'Sans huile de palme', 8), rule('formula_organic', 'Certification Bio', 6)],
+      }),
+    );
+    const cmp = fixture.componentInstance;
+    const r = cmp.result()!;
+    expect(cmp.verdict(r)).toBe('Très bon lait pour Léo');
+    expect(cmp.why(r).map((w) => `${w.points} ${w.label}`)).toEqual([
+      '+8 Sans huile de palme',
+      '+6 Certification Bio',
+      '60 Base commune : tout lait vendu en Europe est conforme',
+    ]);
+  });
+
+  it("masque le score quand une alerte critique s'applique (miel avant 1 an)", () => {
+    const el = answer(
+      scanResult({
+        finalScore: 65,
+        criticalAlert: { title: 'Contient du miel — interdit avant 1 an', message: 'Botulisme infantile.', source_name: 'ANSES', source_url: 'https://www.anses.fr' },
+      }),
+    );
+    expect(el.querySelector('[role="alert"]')?.textContent).toContain('interdit avant 1 an');
+    expect(el.querySelector('#pp-verdict')).toBeNull();
+    expect(el.textContent).toContain("Le score n'est pas affiché");
+  });
+
+  it('donne une issue quand le code est inconnu de la base', () => {
+    const el = answer({ error: 'Produit non trouvé.' }, 404);
+    expect(el.textContent).toContain("Produit inconnu d'Open Food Facts");
+    expect(el.querySelector('a[href="/scanner"]')).not.toBeNull();
   });
 });

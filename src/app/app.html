@@ -1,15 +1,17 @@
-<div class="np-pwa-shell">
-  <app-pwa-header />
-  <main class="np-pwa-main">
+<div class="np-pwa-shell" [class.np-pwa-shell--bare]="bare()">
+  @if (!bare()) {
+    <app-pwa-header />
+  }
+  <main class="np-pwa-main" id="contenu">
     <router-outlet />
-    <p class="np-disclaimer-compact">
-      <app-icon name="info" class="np-disclaimer-compact__icon" />
-      <span
-        >Analyse informative basée sur les recommandations officielles.
-        <strong>Ne remplace pas l'avis d'un pédiatre.</strong>
-        <a routerLink="/infos"> En savoir plus</a></span
-      >
-    </p>
+    @if (!bare()) {
+      <p class="np-disclaimer-compact">
+        Analyse informative, fondée sur les recommandations officielles. Elle ne remplace pas
+        l'avis d'un pédiatre. <a routerLink="/infos">Comment on note</a>
+      </p>
+    }
   </main>
-  <app-pwa-bottom-nav />
+  @if (!bare()) {
+    <app-pwa-bottom-nav />
+  }
 </div>

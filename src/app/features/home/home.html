@@ -1,35 +1,56 @@
-<section class="np-app-hero">
-  <h1 class="np-app-hero__greeting">Bonjour.</h1>
-  <p class="np-app-hero__subtitle">Prêt à scanner ?</p>
+<section class="home__hero">
+  <h1 class="home__title">Ce petit pot, je peux le donner&#160;?</h1>
+  @if (profile.age() !== null) {
+    <p class="home__lead">Scannez-le : réponse adaptée à {{ profile.who() }}, {{ ageText() }}.</p>
+  } @else {
+    <p class="home__lead">
+      Scannez-le pour voir son score.
+      <a routerLink="/bienvenue" class="home__age-link">Indiquez l'âge de votre enfant</a> : le score
+      en dépend.
+    </p>
+  }
 </section>
 
-@if (!hasAge()) {
-  <a routerLink="/profil-bebe" class="np-age-prompt">
-    <app-icon name="baby" class="np-age-prompt__icon" />
-    <span>Renseignez l'âge de votre enfant pour des analyses adaptées.</span>
+<section class="home__actions">
+  <a routerLink="/scanner" class="np-cta home__scan">
+    <app-icon name="scan-barcode" class="home__scan-icon" />
+    Scanner un produit
   </a>
-}
+  <a routerLink="/saisie-manuelle" class="np-link home__manual">Saisir le code-barres à la main</a>
+</section>
 
-<a routerLink="/scanner" class="np-app-scan-card">
-  <h2 class="np-app-scan-card__title">Scanner un produit</h2>
-  <div class="np-app-scan-card__icon-wrapper">
-    <app-icon name="scan-barcode" class="np-app-scan-card__icon" />
+<section class="home__recent" aria-labelledby="home-recent">
+  <div class="home__recent-head">
+    <h2 id="home-recent" class="home__h2">Derniers produits</h2>
+    @if (recentScans().length > 0) {
+      <a routerLink="/historique" class="np-link">Tout voir</a>
+    }
   </div>
-  <p class="np-app-scan-card__description">
-    Pointez votre caméra vers le code-barres pour une analyse instantanée.
-  </p>
-</a>
 
-<div class="np-app-separator">ou</div>
+  @for (scan of recentScans(); track scan.product.ean) {
+    <a [routerLink]="['/scan', scan.product.ean]" class="home__item">
+      <span class="home__thumb">
+        @if (scan.product.imageUrl) {
+          <img [src]="scan.product.imageUrl" alt="" loading="lazy" />
+        }
+      </span>
+      <span class="home__item-text">
+        <span class="home__item-name">{{ scan.product.name }}</span>
+        <span class="home__item-brand">{{ scan.product.brand || 'Marque inconnue' }}</span>
+      </span>
+      <span [class]="'np-level np-level--' + scan.level">{{ scan.finalScore }} · {{ label(scan.level) }}</span>
+    </a>
+  } @empty {
+    <p class="home__empty">
+      Vos produits scannés s'afficheront ici, avec leur score, pour les retrouver au rayon.
+    </p>
+  }
+</section>
 
-<a routerLink="/saisie-manuelle" class="np-app-manual">
-  <app-icon name="list-checks" class="np-app-manual__icon" />
-  <span>Saisie manuelle du code-barres</span>
-</a>
-
+<!-- Après les produits : l'installation ne doit pas concurrencer le scan. -->
 @if (showInstall()) {
-  <button type="button" class="np-landing-hero__cta-install np-app-install" (click)="onInstall()">
-    <app-icon name="download" class="np-app-install__icon" />
+  <button type="button" class="np-cta np-cta--outline home__install" (click)="onInstall()">
+    <app-icon name="download" class="home__install-icon" />
     Installer l'application
   </button>
 }
@@ -43,45 +64,3 @@
     </button>
   </div>
 }
-
-<section class="np-app-section">
-  <div class="np-app-section__header">
-    <h2 class="np-app-section__title">Vos derniers scans</h2>
-    @if (recentScans().length > 0) {
-      <a routerLink="/historique" class="np-app-section__link">Voir tout</a>
-    }
-  </div>
-
-  @for (scan of recentScans(); track scan.product.ean) {
-    <a [routerLink]="['/scan', scan.product.ean]" class="np-product-card">
-      <div class="np-product-card__image">
-        @if (scan.product.imageUrl) {
-          <img [src]="scan.product.imageUrl" [alt]="scan.product.name" />
-        } @else {
-          <app-icon name="package" class="np-product-card__image-icon" />
-        }
-      </div>
-
-      <div class="np-product-card__content">
-        <p class="np-product-card__brand">{{ scan.product.brand || '-' }}</p>
-        <p class="np-product-card__name">{{ scan.product.name }}</p>
-        <p class="np-product-card__date">{{ scan.calculatedAt | date: 'dd/MM/yyyy à HH:mm' }}</p>
-      </div>
-
-      <div class="np-mini-score">
-        <svg class="np-mini-score__svg" viewBox="0 0 48 48">
-          <circle class="np-mini-score__bg" cx="24" cy="24" r="20"></circle>
-          <circle
-            [class]="'np-mini-score__progress np-mini-score__progress--' + scan.level"
-            cx="24"
-            cy="24"
-            r="20"
-            stroke-dasharray="125.6"
-            [attr.stroke-dashoffset]="scoreOffset(scan.finalScore)"
-          ></circle>
-        </svg>
-        <span class="np-mini-score__value">{{ scan.finalScore }}</span>
-      </div>
-    </a>
-  }
-</section>

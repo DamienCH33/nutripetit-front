@@ -13,16 +13,6 @@
 /* ============================================
  * BANDEAU ALERTE CRITIQUE
  * ============================================ */
-.np-critical-alert {
-  display: flex;
-  gap: var(--np-spacing-3);
-  padding: var(--np-spacing-4);
-  background-color: var(--np-score-discouraged-bg);
-  border: 2px solid var(--np-score-discouraged);
-  border-radius: var(--np-radius-md);
-  animation: np-pulse-critical 2s ease-in-out infinite;
-}
-
 @keyframes np-pulse-critical {
   0%,
   100% {
@@ -33,82 +23,9 @@
   }
 }
 
-.np-critical-alert__icon-wrapper {
-  flex-shrink: 0;
-  width: 44px;
-  height: 44px;
-  background-color: var(--np-white);
-  border-radius: 50%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
-.np-critical-alert__icon {
-  width: 24px;
-  height: 24px;
-  color: var(--np-score-discouraged);
-}
-
-.np-critical-alert__content {
-  flex: 1;
-}
-
-.np-critical-alert__title {
-  font-size: var(--np-font-size-base);
-  font-weight: var(--np-font-weight-bold);
-  color: var(--np-score-discouraged);
-  text-transform: uppercase;
-  letter-spacing: 0.05em;
-  margin-bottom: var(--np-spacing-1);
-}
-
-.np-critical-alert__message {
-  font-size: var(--np-font-size-sm);
-  color: var(--np-gray-800);
-  line-height: 1.5;
-  margin-bottom: var(--np-spacing-2);
-}
-
-.np-critical-alert__source {
-  display: inline-flex;
-  align-items: center;
-  gap: 4px;
-  font-size: var(--np-font-size-xs);
-  color: var(--np-score-discouraged);
-  font-weight: var(--np-font-weight-semibold);
-}
-
-.np-critical-alert__source-icon {
-  width: 12px;
-  height: 12px;
-}
-
 /* ============================================
  * ÉVOLUTION SELON L'ÂGE
  * ============================================ */
-.np-product__section-title {
-  display: flex;
-  align-items: center;
-  gap: var(--np-spacing-2);
-  font-size: var(--np-font-size-lg);
-  font-weight: var(--np-font-weight-bold);
-  color: var(--np-gray-900);
-  margin-bottom: var(--np-spacing-1);
-}
-
-.np-product__section-icon {
-  width: 22px;
-  height: 22px;
-  color: var(--np-orange-primary);
-}
-
-.np-product__section-lead {
-  font-size: var(--np-font-size-sm);
-  color: var(--np-gray-600);
-  margin-bottom: var(--np-spacing-4);
-}
-
 .np-age-evolution {
   display: flex;
   flex-direction: column;
@@ -153,22 +70,6 @@
   transition: width 800ms ease-out;
 }
 
-.np-age-evolution__fill--ideal {
-  background-color: var(--np-score-ideal);
-}
-.np-age-evolution__fill--good {
-  background-color: var(--np-score-good);
-}
-.np-age-evolution__fill--occasional {
-  background-color: var(--np-score-occasional);
-}
-.np-age-evolution__fill--limit {
-  background-color: var(--np-score-limit);
-}
-.np-age-evolution__fill--discouraged {
-  background-color: var(--np-score-discouraged);
-}
-
 .np-age-evolution__score {
   display: flex;
   flex-direction: column;
@@ -190,55 +91,6 @@
 /* ============================================
  * ONGLETS
  * ============================================ */
-.np-tabs {
-  display: flex;
-  background-color: var(--np-white);
-  border-radius: var(--np-radius-pill);
-  padding: 4px;
-  box-shadow: var(--np-shadow-sm);
-  position: sticky;
-  top: var(--np-spacing-2);
-  z-index: 10;
-}
-
-.np-tabs__tab {
-  flex: 1;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 4px;
-  padding: var(--np-spacing-2) var(--np-spacing-3);
-  background-color: transparent;
-  border: none;
-  border-radius: var(--np-radius-pill);
-  font-size: var(--np-font-size-xs);
-  font-weight: var(--np-font-weight-semibold);
-  color: var(--np-gray-500);
-  cursor: pointer;
-  transition: all 200ms ease-out;
-}
-
-.np-tabs__tab--active {
-  background: linear-gradient(135deg, var(--np-orange-primary) 0%, var(--np-orange-light) 100%);
-  color: var(--np-white);
-  box-shadow: var(--np-shadow-orange);
-}
-
-.np-tabs__icon {
-  width: 14px;
-  height: 14px;
-}
-
-.np-tabs__panel {
-  display: none;
-}
-
-.np-tabs__panel--active {
-  display: flex;
-  flex-direction: column;
-  gap: var(--np-spacing-4);
-}
-
 /* ============================================
  * SECTIONS RÈGLES (Bonus / Malus)
  * ============================================ */
@@ -263,15 +115,6 @@
 .np-rules-section__title--malus {
   color: var(--np-score-discouraged);
 }
-.np-rules-section__title--satisfied {
-  color: var(--np-gray-600);
-}
-
-.np-rules-section__icon {
-  width: 18px;
-  height: 18px;
-}
-
 /* ============================================
  * SOURCES
  * ============================================ */
@@ -364,58 +207,9 @@
 /* ============================================
  * ACTIONS EN BAS
  * ============================================ */
-.np-product-actions {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: var(--np-spacing-2);
-  padding-top: var(--np-spacing-2);
-}
-
-.np-product-actions__btn {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 4px;
-  padding: var(--np-spacing-3) var(--np-spacing-2);
-  background-color: var(--np-white);
-  border: 1.5px solid var(--np-gray-200);
-  border-radius: var(--np-radius-md);
-  font-size: var(--np-font-size-xs);
-  font-weight: var(--np-font-weight-medium);
-  color: var(--np-gray-700);
-  cursor: pointer;
-  transition: all 200ms ease-out;
-}
-
-.np-product-actions__btn:hover {
-  border-color: var(--np-orange-primary);
-  color: var(--np-orange-primary);
-}
-
-.np-product-actions__icon {
-  width: 18px;
-  height: 18px;
-}
-
 /* ============================================
  * ONGLETS SCROLLABLES (5 tabs ne tiennent plus)
  * ============================================ */
-.np-tabs--scrollable {
-  overflow-x: auto;
-  scrollbar-width: none;
-  -ms-overflow-style: none;
-}
-
-.np-tabs--scrollable::-webkit-scrollbar {
-  display: none;
-}
-
-.np-tabs--scrollable .np-tabs__tab {
-  flex: 0 0 auto;
-  min-width: max-content;
-  white-space: nowrap;
-}
-
 /* ============================================
  * BANDEAU INFO ÉVOLUTION ÂGE
  * ============================================ */
@@ -485,10 +279,6 @@
   gap: var(--np-spacing-3);
 }
 
-.np-env-card--expandable .np-env-card__header {
-  margin-bottom: var(--np-spacing-3);
-}
-
 .np-env-card__icon-wrapper {
   flex-shrink: 0;
   width: 40px;
@@ -498,18 +288,6 @@
   align-items: center;
   justify-content: center;
   background-color: var(--np-cream);
-}
-
-.np-env-card__icon-wrapper--good {
-  background-color: var(--np-score-good-bg);
-}
-
-.np-env-card__icon-wrapper--limit {
-  background-color: var(--np-score-limit-bg);
-}
-
-.np-env-card__icon-wrapper--neutral {
-  background-color: var(--np-gray-100);
 }
 
 .np-env-card__icon {
@@ -556,137 +334,9 @@
   color: var(--np-score-limit);
 }
 
-.np-env-card__details {
-  display: flex;
-  flex-direction: column;
-  gap: var(--np-spacing-2);
-  padding-top: var(--np-spacing-2);
-  border-top: 1px solid var(--np-gray-100);
-}
-
-.np-env-card__detail-row {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: var(--np-spacing-1) 0;
-}
-
-.np-env-card__detail-name {
-  font-size: var(--np-font-size-sm);
-  color: var(--np-gray-700);
-}
-
-.np-env-card__detail-status {
-  font-size: var(--np-font-size-xs);
-  font-weight: var(--np-font-weight-semibold);
-}
-
 /* ============================================
  * SCAN ERROR PAGE
  * ============================================ */
-.np-scan-error {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  text-align: center;
-  padding: var(--np-spacing-12) var(--np-spacing-4);
-  min-height: 60vh;
-  justify-content: center;
-}
-
-.np-scan-error__icon-wrapper {
-  width: 80px;
-  height: 80px;
-  border-radius: 50%;
-  background: linear-gradient(
-    135deg,
-    var(--np-score-discouraged-bg) 0%,
-    rgba(245, 124, 0, 0.1) 100%
-  );
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  margin-bottom: var(--np-spacing-4);
-}
-
-.np-scan-error__icon {
-  width: 40px;
-  height: 40px;
-  color: var(--np-score-discouraged);
-}
-
-.np-scan-error__title {
-  font-size: var(--np-font-size-2xl);
-  font-weight: var(--np-font-weight-bold);
-  color: var(--np-gray-900);
-  margin-bottom: var(--np-spacing-2);
-}
-
-.np-scan-error__message {
-  font-size: var(--np-font-size-base);
-  color: var(--np-gray-600);
-  line-height: 1.5;
-  max-width: 400px;
-  margin-bottom: var(--np-spacing-6);
-}
-
-.np-scan-error__actions {
-  display: flex;
-  flex-direction: column;
-  gap: var(--np-spacing-2);
-  width: 100%;
-  max-width: 320px;
-}
-
-.np-scan-error__btn {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: var(--np-spacing-2);
-  padding: var(--np-spacing-3) var(--np-spacing-4);
-  border-radius: var(--np-radius-md);
-  font-size: var(--np-font-size-base);
-  font-weight: var(--np-font-weight-semibold);
-  text-decoration: none;
-  transition: all 200ms ease-out;
-}
-
-.np-scan-error__btn--primary {
-  background: linear-gradient(135deg, var(--np-orange-primary) 0%, var(--np-orange-light) 100%);
-  color: var(--np-white);
-  box-shadow: var(--np-shadow-orange);
-}
-
-.np-scan-error__btn--primary:hover {
-  transform: translateY(-1px);
-}
-
-.np-scan-error__btn--secondary {
-  background-color: var(--np-white);
-  color: var(--np-gray-800);
-  border: 1.5px solid var(--np-gray-200);
-}
-
-.np-scan-error__btn--secondary:hover {
-  border-color: var(--np-orange-primary);
-  color: var(--np-orange-primary);
-}
-
-.np-scan-error__btn--ghost {
-  background-color: transparent;
-  color: var(--np-gray-500);
-  font-weight: var(--np-font-weight-medium);
-}
-
-.np-scan-error__btn--ghost:hover {
-  color: var(--np-gray-800);
-}
-
-.np-scan-error__btn-icon {
-  width: 18px;
-  height: 18px;
-}
-
 /* ============================================
  * FORMULA NOTICE (laits infantiles)
  * ============================================ */
@@ -742,25 +392,6 @@
   }
 }
 
-.np-nutrient--unavailable {
-  opacity: 0.7;
-  background-color: var(--np-gray-50);
-}
-
-.np-nutrient__value--unknown {
-  color: var(--np-gray-400);
-  font-style: italic;
-}
-
-.np-nutrient__cursor--unknown {
-  background-color: var(--np-gray-300);
-}
-
-.np-nutrient__message--unknown {
-  color: var(--np-gray-500);
-  font-style: italic;
-}
-
 .np-nutrients-category {
   font-size: var(--np-font-size-base);
   font-weight: var(--np-font-weight-bold);
@@ -772,67 +403,7 @@
 }
 
 /* === RULE CARD POINTS COLORÉS === */
-.np-rule-card__impact {
-  flex-shrink: 0;
-  padding: 4px 12px;
-  border-radius: var(--np-radius-pill);
-  font-size: var(--np-font-size-base);
-  font-weight: var(--np-font-weight-bold);
-}
-
-.np-rule-card__impact--bonus {
-  background-color: var(--np-score-ideal-bg);
-  color: var(--np-score-ideal);
-}
-
-.np-rule-card__impact--malus {
-  background-color: var(--np-score-discouraged-bg);
-  color: var(--np-score-discouraged);
-}
-
-.np-rule-card__impact-unit {
-  font-size: var(--np-font-size-xs);
-  opacity: 0.7;
-  margin-left: 2px;
-}
-
-.np-rule-card__icon-wrapper--bonus {
-  background-color: var(--np-score-ideal-bg);
-}
-
-.np-rule-card__icon-wrapper--malus {
-  background-color: var(--np-score-discouraged-bg);
-}
-
-.np-rule-card__icon-wrapper--bonus .np-rule-card__icon {
-  color: var(--np-score-ideal);
-}
-
-.np-rule-card__icon-wrapper--malus .np-rule-card__icon {
-  color: var(--np-score-discouraged);
-}
-
 /* === BADGE ÂGE RECOMMANDÉ === */
-.np-age-badge {
-  display: inline-flex;
-  align-items: center;
-  gap: var(--np-spacing-2);
-  padding: var(--np-spacing-2) var(--np-spacing-4);
-  background: linear-gradient(135deg, var(--np-cream-light) 0%, var(--np-cream) 100%);
-  border-radius: var(--np-radius-pill);
-  font-size: var(--np-font-size-sm);
-  font-weight: var(--np-font-weight-semibold);
-  color: var(--np-orange-dark);
-  margin: 0 auto;
-  align-self: center;
-}
-
-.np-age-badge__icon {
-  width: 18px;
-  height: 18px;
-  color: var(--np-orange-primary);
-}
-
 /* === ADDITIFS === */
 .np-additives-section {
   margin-top: var(--np-spacing-4);
@@ -900,25 +471,11 @@
   margin-top: var(--np-spacing-1);
 }
 
-.np-age-info--warning {
-  background-color: var(--np-score-discouraged-bg);
-  border-left-color: var(--np-score-discouraged);
-}
-
 .np-age-info--warning .np-age-info__icon {
   color: var(--np-score-discouraged);
 }
 
 /* Version d'algorithme (traçabilité, bas de l'onglet Sources) */
-.np-product__algo-version {
-  margin-top: 16px;
-  padding-top: 12px;
-  border-top: 1px solid var(--np-gray-200, #e0e0e0);
-  color: var(--np-gray-600, #757575);
-  font-size: 0.8125rem;
-  text-align: center;
-}
-
 /* ── Accordéon « Contrôles passés » (repliable, natif <details>) ────────── */
 .np-rules-accordion {
   margin-top: var(--np-spacing-4);
@@ -947,10 +504,6 @@
 
 .np-rules-accordion__summary span {
   flex: 1;
-}
-
-.np-rules-section__icon--satisfied {
-  color: var(--np-green-dark, #2e7d32);
 }
 
 .np-rules-accordion__chevron {
@@ -994,3 +547,373 @@
 .np-attribution__link:hover {
   color: var(--np-green-dark, #2e7d32);
 }
+
+/* ==========================================================================
+ * Refonte 2026-10 : verdict, échelle, « pourquoi », sections dépliables
+ * ========================================================================== */
+.pp-muted {
+  font-size: 14px;
+  color: var(--np-ink-2);
+}
+
+.pp-ico {
+  width: 20px;
+  height: 20px;
+}
+
+.pp-h2 {
+  margin: 0;
+  font-size: 17px;
+  font-weight: 700;
+}
+
+.pp-card {
+  background: var(--np-surface);
+  border-radius: 24px;
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.pp-product {
+  display: flex;
+  gap: 14px;
+  align-items: center;
+  padding: 8px 4px 16px;
+}
+
+.pp-product__img {
+  width: 72px;
+  height: 72px;
+  border-radius: 16px;
+  background: var(--np-surface);
+  border: 1px solid #e3e9e0;
+  flex-shrink: 0;
+  overflow: hidden;
+
+  img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+  }
+}
+
+.pp-product__text {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  min-width: 0;
+}
+
+.pp-product__name {
+  font-size: 18px;
+  font-weight: 700;
+  line-height: 1.25;
+}
+
+.pp-verdict__top {
+  display: flex;
+  align-items: flex-end;
+  gap: 14px;
+}
+
+.pp-verdict__score {
+  font-family: var(--np-font-display);
+  font-size: 76px;
+  line-height: 0.82;
+  font-weight: 800;
+  letter-spacing: -0.05em;
+}
+
+.pp-verdict__text {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  padding-bottom: 2px;
+}
+
+.pp-verdict__title {
+  margin: 0;
+  font-size: 24px;
+  line-height: 1.1;
+  font-weight: 800;
+}
+
+.pp-why {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.pp-why__list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.pp-why__item {
+  display: flex;
+  gap: 12px;
+  align-items: center;
+  font-size: 15px;
+  line-height: 1.35;
+}
+
+.pp-why__pts {
+  min-width: 46px;
+  text-align: center;
+  padding: 4px 0;
+  border-radius: 8px;
+  font-weight: 700;
+  font-size: 14px;
+  flex-shrink: 0;
+}
+
+.pp-note {
+  margin: 0;
+  padding: 12px 14px;
+  border-radius: 14px;
+  background: var(--np-info-bg);
+  color: var(--np-info-ink);
+  font-size: 14px;
+  line-height: 1.45;
+}
+
+.pp-hidden-score {
+  font-size: 15px;
+  line-height: 1.45;
+  margin: 0;
+}
+
+/* Alerte critique : pleine largeur, avant tout le reste. */
+.pp-alert {
+  margin: 0 -16px 16px;
+  padding: 20px 20px 24px;
+  background: #9e2019;
+  color: #fff;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.pp-alert__ico {
+  width: 40px;
+  height: 40px;
+}
+
+.pp-alert__title {
+  margin: 0;
+  font-size: 30px;
+  line-height: 1.05;
+  font-weight: 800;
+  letter-spacing: -0.03em;
+}
+
+.pp-alert__msg {
+  margin: 0;
+  font-size: 17px;
+  line-height: 1.45;
+}
+
+.pp-alert__src {
+  color: #fff;
+  font-weight: 700;
+  min-height: 44px;
+  display: inline-flex;
+  align-items: center;
+}
+
+.pp-detail-title {
+  margin: 24px 4px 8px;
+}
+
+.pp-sec {
+  background: var(--np-surface);
+  border-radius: 18px;
+  margin-bottom: 8px;
+}
+
+.pp-sec__head {
+  list-style: none;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 12px;
+  min-height: 56px;
+  padding: 0 16px;
+  font-size: 16px;
+  font-weight: 700;
+  cursor: pointer;
+
+  &::-webkit-details-marker {
+    display: none;
+  }
+
+  &::after {
+    content: '';
+    width: 8px;
+    height: 8px;
+    border-right: 2px solid var(--np-ink-2);
+    border-bottom: 2px solid var(--np-ink-2);
+    transform: rotate(45deg);
+    margin-left: auto;
+    flex-shrink: 0;
+  }
+}
+
+.pp-sec[open] > .pp-sec__head::after {
+  transform: rotate(-135deg);
+}
+
+.pp-sec__head .pp-muted {
+  font-weight: 400;
+  margin-left: auto;
+}
+
+.pp-sec__body {
+  padding: 0 16px 16px;
+}
+
+/* Squelette pendant l'analyse (au-delà d'une seconde, d'après la mesure). */
+.pp-skel {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.pp-skel__head {
+  display: flex;
+  gap: 14px;
+  align-items: center;
+  padding: 8px 4px 0;
+}
+
+.pp-skel__lines {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  flex: 1;
+}
+
+.pp-sk {
+  display: block;
+  height: 14px;
+  border-radius: 8px;
+  background: #e4eae1;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .pp-sk {
+    animation: pp-pulse 1.4s ease-in-out infinite;
+  }
+}
+
+@keyframes pp-pulse {
+  50% {
+    opacity: 0.55;
+  }
+}
+
+.pp-sk--thumb {
+  width: 72px;
+  height: 72px;
+  border-radius: 16px;
+  flex-shrink: 0;
+}
+
+.pp-sk--lg {
+  height: 20px;
+}
+
+.pp-sk--score {
+  width: 84px;
+  height: 64px;
+  border-radius: 12px;
+}
+
+.pp-sk--bar {
+  height: 12px;
+}
+
+.pp-skel__msg {
+  margin: 0 4px;
+  font-size: 15px;
+  color: var(--np-ink-2);
+}
+
+/* Erreur : ce qui s'est passé, puis comment s'en sortir. */
+.pp-error {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  padding-top: 12px;
+}
+
+.pp-error__code {
+  margin: 0;
+  font-size: 14px;
+  color: var(--np-ink-2);
+}
+
+.pp-error__title {
+  margin: 0;
+  font-size: 30px;
+  line-height: 1.06;
+  font-weight: 800;
+  letter-spacing: -0.03em;
+}
+
+.pp-error__msg {
+  margin: 0;
+  font-size: 16px;
+  line-height: 1.5;
+  color: #33433a;
+}
+
+.pp-error__fix {
+  gap: 12px;
+}
+
+/* Classes construites dynamiquement dans le template */
+.np-age-evolution__fill--ideal {
+  background-color: var(--np-score-ideal);
+}
+.np-age-evolution__fill--good {
+  background-color: var(--np-score-good);
+}
+.np-age-evolution__fill--occasional {
+  background-color: var(--np-score-occasional);
+}
+.np-age-evolution__fill--limit {
+  background-color: var(--np-score-limit);
+}
+.np-age-evolution__fill--discouraged {
+  background-color: var(--np-score-discouraged);
+}
+
+.np-env-card__icon-wrapper--good {
+  background-color: var(--np-score-good-bg);
+}
+
+.np-env-card__icon-wrapper--limit {
+  background-color: var(--np-score-limit-bg);
+}
+
+.np-env-card__icon-wrapper--neutral {
+  background-color: var(--np-gray-100);
+}
+
+.np-env-card__icon-wrapper--good .np-env-card__icon {
+  color: var(--np-score-ideal);
+}
+.np-env-card__icon-wrapper--limit .np-env-card__icon {
+  color: var(--np-score-limit);
+}
+.np-env-card__icon-wrapper--neutral .np-env-card__icon {
+  color: var(--np-gray-500);
+}
+

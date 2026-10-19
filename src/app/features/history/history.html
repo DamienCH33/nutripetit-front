@@ -1,66 +1,72 @@
-@if (data(); as d) {
-  <div class="np-history">
-    <header class="np-history__header">
-      <h1 class="np-history__title">
-        <app-icon name="clock" class="np-history__title-icon" />
-        Mon historique
-      </h1>
-      <p class="np-history__lead">
-        Vos derniers produits scannés. Les données sont conservées 13 mois maximum.
-      </p>
-      @if (d.results.length > 0) {
-        <div class="np-history__clear">
-          <button
-            type="button"
-            class="np-btn np-btn--ghost np-history__clear-btn"
-            (click)="onClear()"
-          >
-            <app-icon name="trash-2" class="np-history__clear-icon" />
-            Effacer l'historique
-          </button>
-        </div>
-      }
-    </header>
-
-    @if (d.results.length === 0) {
-      <div class="np-history__empty">
-        <div class="np-history__empty-icon-wrapper">
-          <app-icon name="scan-barcode" class="np-history__empty-icon" />
-        </div>
-        <p class="np-history__empty-title">Aucun scan pour le moment</p>
-        <p class="np-history__empty-message">
-          Scannez votre premier produit pour commencer à construire votre historique.
-        </p>
-        <a routerLink="/scanner" class="np-history__cta">
-          <app-icon name="scan-barcode" class="np-history__cta-icon" />
-          Scanner un produit
-        </a>
-      </div>
-    } @else {
-      <div class="np-history__list">
-        @for (result of d.results; track result.product.ean) {
-          <a [routerLink]="['/scan', result.product.ean]" class="np-history__item">
-            <div class="np-history__item-image">
-              @if (result.product.imageUrl) {
-                <img [src]="result.product.imageUrl" [alt]="result.product.name" />
-              } @else {
-                <app-icon name="scan-barcode" class="np-history__item-placeholder" />
-              }
-            </div>
-            <div class="np-history__item-main">
-              <p class="np-history__item-name">{{ result.product.name }}</p>
-              <p class="np-history__item-brand">{{ result.product.brand ?? '-' }}</p>
-              <p class="np-history__item-date">
-                {{ result.calculatedAt | date: 'dd/MM/yyyy à HH:mm' }}
-              </p>
-            </div>
-            <div [class]="'np-history__item-score np-history__item-score--' + result.level">
-              <span class="np-history__item-score-value">{{ result.finalScore }}</span>
-              <span class="np-history__item-score-total">/100</span>
-            </div>
-          </a>
-        }
-      </div>
+<section class="hi">
+  <header class="hi__head">
+    <h1 class="hi__title">Historique</h1>
+    @if (total() > 0) {
+      <button type="button" class="hi__clear" (click)="openClear()">Effacer</button>
     }
-  </div>
-}
+  </header>
+
+  @if (notice(); as n) {
+    <p class="hi__notice" role="status">{{ n }}</p>
+  }
+
+  @if (loadError(); as e) {
+    <p class="hi__error" role="alert">{{ e }}</p>
+  } @else if (data() === null) {
+    <p class="hi__muted" role="status">Chargement de l'historique…</p>
+  } @else if (total() === 0) {
+    <div class="hi__empty">
+      <h2 class="hi__h2">Aucun produit pour l'instant</h2>
+      <p class="hi__muted">
+        Chaque produit scanné s'ajoute ici avec son score, pour le retrouver au prochain passage en
+        magasin.
+      </p>
+      <a routerLink="/scanner" class="np-cta">
+        <app-icon name="scan-barcode" class="hi__cta-ico" />
+        Scanner un produit
+      </a>
+    </div>
+  } @else {
+    <p class="hi__muted">{{ total() }} produit{{ total() > 1 ? 's' : '' }} · gardés 13 mois au plus</p>
+
+    @for (g of groups(); track g.day) {
+      <h2 class="hi__day">{{ g.day }}</h2>
+      <ul class="hi__list">
+        @for (item of g.items; track item.product.ean) {
+          <li>
+            <a [routerLink]="['/scan', item.product.ean]" class="hi__item">
+              <span class="hi__thumb">
+                @if (item.product.imageUrl) {
+                  <img [src]="item.product.imageUrl" alt="" loading="lazy" />
+                }
+              </span>
+              <span class="hi__text">
+                <span class="hi__name">{{ item.product.name }}</span>
+                <span class="hi__brand">{{ item.product.brand || 'Marque inconnue' }}</span>
+              </span>
+              <span [class]="'np-level np-level--' + item.level">{{ item.finalScore }} · {{ label(item.level) }}</span>
+            </a>
+          </li>
+        }
+      </ul>
+    }
+  }
+</section>
+
+<dialog #sheet class="hi-sheet" aria-labelledby="hi-sheet-title" (cancel)="closeClear()">
+  <span class="hi-sheet__grip" aria-hidden="true"></span>
+  <h2 id="hi-sheet-title" class="hi-sheet__title">
+    {{ total() > 1 ? 'Effacer les ' + total() + ' produits' : 'Effacer ce produit' }} de l'historique&#160;?
+  </h2>
+  <p class="hi__muted">
+    Ils sont supprimés de nos serveurs, avec votre session anonyme. Le profil de
+    {{ profile.who() }} reste sur ce téléphone.
+  </p>
+  @if (clearError(); as e) {
+    <p class="hi__error" role="alert">{{ e }}</p>
+  }
+  <button type="button" class="np-cta np-cta--danger" [disabled]="clearing()" (click)="confirmClear()">
+    {{ clearing() ? 'Effacement…' : total() > 1 ? 'Effacer les ' + total() + ' produits' : 'Effacer le produit' }}
+  </button>
+  <button type="button" class="np-cta np-cta--outline" (click)="closeClear()">Garder l'historique</button>
+</dialog>

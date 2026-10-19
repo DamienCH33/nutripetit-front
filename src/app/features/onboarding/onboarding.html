@@ -1,0 +1,62 @@
+<div class="ob">
+  <p class="ob__brand np-display">Nutri<span>Petit</span></p>
+
+  <div class="ob__intro">
+    <h1 class="ob__title">Quel âge a votre enfant&#160;?</h1>
+    <p class="ob__lead">
+      Le sel, le miel ou les protéines ne se jugent pas pareil à 4 mois et à 2 ans. Le score
+      s'adapte à cet âge.
+    </p>
+  </div>
+
+  <form class="ob__form" (ngSubmit)="start()">
+    <div class="ob__field">
+      <label for="ob-prenom" class="ob__label">Prénom <span>(facultatif)</span></label>
+      <input
+        id="ob-prenom"
+        name="prenom"
+        type="text"
+        autocomplete="off"
+        maxlength="30"
+        class="ob__input"
+        [ngModel]="name()"
+        (ngModelChange)="name.set($event)"
+      />
+    </div>
+
+    <fieldset class="ob__field ob__age">
+      <legend class="ob__label">Âge</legend>
+      <div class="ob__stepper">
+        <button type="button" class="ob__step" aria-label="Un mois de moins" (click)="step(-1)">
+          −
+        </button>
+        <p class="ob__value" aria-live="polite">
+          <span class="ob__number np-display">{{ ageNumber() }}</span>
+          <span class="ob__unit">{{ ageUnit() }}</span>
+        </p>
+        <button type="button" class="ob__step" aria-label="Un mois de plus" (click)="step(1)">
+          +
+        </button>
+      </div>
+      <div class="ob__shortcuts" role="group" aria-label="Âges fréquents">
+        @for (m of shortcuts; track m) {
+          <button
+            type="button"
+            class="ob__chip"
+            [class.ob__chip--on]="age() === m"
+            [attr.aria-pressed]="age() === m"
+            (click)="pick(m)"
+          >
+            {{ m >= 12 && m % 12 === 0 ? (m === 12 ? '1 an' : m / 12 + ' ans') : m + ' mois' }}
+          </button>
+        }
+      </div>
+    </fieldset>
+
+    <div class="ob__actions">
+      <button type="submit" class="np-cta">{{ ctaLabel() }}</button>
+      <button type="button" class="ob__later" (click)="later()">Plus tard</button>
+      <p class="ob__privacy">Reste sur ce téléphone. Seul l'âge part avec le scan.</p>
+    </div>
+  </form>
+</div>

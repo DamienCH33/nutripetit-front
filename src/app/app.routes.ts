@@ -1,10 +1,18 @@
 import { Routes } from '@angular/router';
 import { Home } from './features/home/home';
+import { onboardingGuard } from './onboarding.guard';
 
 // Seul l'accueil est dans le bundle initial. Les autres pages sont chargées à la
 // demande : le scanner embarque ZXing (~400 kB), inutile pour qui saisit un EAN.
 export const routes: Routes = [
-  { path: '', component: Home, title: 'NutriPetit' },
+  // pathMatch 'full' obligatoire : en 'prefix' (défaut), '' correspond aussi à
+  // /bienvenue, la garde redirige vers /bienvenue… qui la redéclenche : boucle infinie.
+  { path: '', pathMatch: 'full', component: Home, title: 'NutriPetit', canMatch: [onboardingGuard] },
+  {
+    path: 'bienvenue',
+    loadComponent: () => import('./features/onboarding/onboarding').then((m) => m.Onboarding),
+    title: 'Bienvenue — NutriPetit',
+  },
   {
     path: 'saisie-manuelle',
     loadComponent: () => import('./features/manual-entry/manual-entry').then((m) => m.ManualEntry),
