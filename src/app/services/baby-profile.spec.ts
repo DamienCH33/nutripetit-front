@@ -1,16 +1,30 @@
 import { TestBed } from '@angular/core/testing';
 
-import { BabyProfile } from './baby-profile';
+import { BabyProfileService } from './baby-profile';
 
-describe('BabyProfile', () => {
-  let service: BabyProfile;
+describe('BabyProfileService', () => {
+  let service: BabyProfileService;
 
   beforeEach(() => {
-    TestBed.configureTestingModule({});
-    service = TestBed.inject(BabyProfile);
+    localStorage.clear();
+    service = TestBed.inject(BabyProfileService);
   });
 
-  it('should be created', () => {
-    expect(service).toBeTruthy();
+  it("renvoie null tant qu'aucun âge n'est enregistré", () => {
+    expect(service.getAge()).toBeNull();
+  });
+
+  it("garde l'âge en mois, y compris 0 (nouveau-né)", () => {
+    service.saveAge(0);
+    expect(service.getAge()).toBe(0);
+
+    service.saveAge(18);
+    expect(service.getAge()).toBe(18);
+  });
+
+  it("oublie l'âge après effacement", () => {
+    service.saveAge(6);
+    service.clearAge();
+    expect(service.getAge()).toBeNull();
   });
 });

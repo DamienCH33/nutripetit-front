@@ -1,4 +1,8 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { provideRouter } from '@angular/router';
+import { provideHttpClient } from '@angular/common/http';
+import { provideHttpClientTesting } from '@angular/common/http/testing';
+
 
 import { BabyProfile } from './baby-profile';
 
@@ -9,6 +13,7 @@ describe('BabyProfile', () => {
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       imports: [BabyProfile],
+      providers: [provideRouter([]), provideHttpClient(), provideHttpClientTesting()],
     }).compileComponents();
 
     fixture = TestBed.createComponent(BabyProfile);
