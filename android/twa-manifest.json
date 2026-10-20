@@ -1,0 +1,42 @@
+{
+  "packageId": "fr.nutripetit.app",
+  "host": "nutripetit.up.railway.app",
+  "name": "NutriPetit",
+  "launcherName": "NutriPetit",
+  "display": "standalone",
+  "orientation": "portrait",
+  "themeColor": "#F3F6F1",
+  "navigationColor": "#FFFFFF",
+  "navigationColorDark": "#1E2B24",
+  "backgroundColor": "#F3F6F1",
+  "enableNotifications": false,
+  "startUrl": "/app/",
+  "iconUrl": "https://nutripetit.up.railway.app/icons/icon-512.png",
+  "maskableIconUrl": "https://nutripetit.up.railway.app/icons/icon-512.png",
+  "splashScreenFadeOutDuration": 300,
+  "signingKey": {
+    "path": "./android.keystore",
+    "alias": "nutripetit"
+  },
+  "appVersionName": "1.0.0",
+  "appVersionCode": 1,
+  "shortcuts": [
+    {
+      "name": "Scanner un produit",
+      "shortName": "Scanner",
+      "url": "/app/scanner",
+      "chosenIconUrl": "https://nutripetit.up.railway.app/icons/icon-192.png"
+    }
+  ],
+  "generatorApp": "bubblewrap-cli",
+  "webManifestUrl": "https://nutripetit.up.railway.app/manifest.json",
+  "fallbackType": "customtabs",
+  "features": {},
+  "alphaDependencies": { "enabled": false },
+  "enableSiteSettingsShortcut": true,
+  "isChromeOSOnly": false,
+  "isMetaQuest": false,
+  "fullScopeUrl": "https://nutripetit.up.railway.app/",
+  "minSdkVersion": 21,
+  "orientationLock": true
+}

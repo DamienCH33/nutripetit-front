@@ -42,3 +42,14 @@ __screenshots__/
 # System files
 .DS_Store
 Thumbs.db
+
+# Appli Android (Bubblewrap) : clé de signature et fichiers générés hors dépôt
+android/*.keystore
+android/*.aab
+android/*.apk
+android/app/
+android/gradle*
+android/build.gradle
+android/settings.gradle
+android/.gradle/
+android/store_icon.png
