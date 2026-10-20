@@ -917,3 +917,19 @@
   color: var(--np-gray-500);
 }
 
+
+.pp-disclaimer {
+  margin: 0;
+  font-size: 13px;
+  line-height: 1.45;
+  color: var(--np-ink-2);
+}
+
+.pp-alert__care {
+  margin: 4px 0 0;
+  padding: 10px 12px;
+  border-radius: 12px;
+  background: rgba(255, 255, 255, 0.14);
+  font-size: 15px;
+  line-height: 1.45;
+}
