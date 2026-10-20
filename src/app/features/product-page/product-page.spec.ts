@@ -171,4 +171,26 @@ describe('ProductPage', () => {
     expect(care).toContain('médecin');
     expect(care).toContain('15');
   });
+
+  it("détaille chaque additif dans sa propre section, avec l'explication", () => {
+    const el = answer(
+      scanResult({
+        additives: [
+          { code: 'E306', name: 'Tocophérols (Vitamine E)', status: 'authorized', note: "Autorisé dans l'UE (règlement 1333/2008), pas de signalement particulier." },
+          { code: 'E171', name: 'Additif non documenté', status: 'controversial', note: 'Évaluation préoccupante (EFSA/ANSES).' },
+        ],
+      }),
+    );
+    const section = [...el.querySelectorAll('details.pp-sec')].find((d) => d.querySelector('summary')?.textContent?.includes('Additifs'));
+    expect(section?.querySelector('summary')?.textContent).toContain('2');
+    expect(section?.querySelectorAll('.np-additive-card').length).toBe(2);
+    expect(section?.textContent).toContain('1333/2008');
+    expect(section?.querySelector('.np-additive-card--alert')?.textContent).toContain('E171');
+  });
+
+  it("n'affiche pas de section Additifs quand il n'y en a pas", () => {
+    const el = answer(scanResult());
+    const summaries = [...el.querySelectorAll('details.pp-sec summary')].map((s) => s.textContent ?? '');
+    expect(summaries.some((t) => t.includes('Additifs'))).toBe(false);
+  });
 });

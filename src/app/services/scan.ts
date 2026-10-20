@@ -135,6 +135,9 @@ export interface AgeRange {
 export interface Additive {
   code: string;
   name: string;
+  /** Absents tant que l'API n'est pas à jour : la fiche affiche alors code et nom seuls. */
+  status?: 'controversial' | 'sweetener' | 'authorized';
+  note?: string;
 }
 
 export interface CarbonFootprint {
