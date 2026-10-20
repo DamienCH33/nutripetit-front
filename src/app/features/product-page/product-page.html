@@ -183,19 +183,27 @@
         </details>
       }
 
-      @if (r.additives.length > 0) {
-        <div class="np-additives-section">
-          <h3 class="np-additives-section__title">Additifs présents ({{ r.additives.length }})</h3>
+      </div>
+    </details>
+
+    @if (r.additives.length > 0) {
+      <details class="pp-sec">
+        <summary class="pp-sec__head">Additifs <span class="pp-muted">{{ r.additives.length }}</span></summary>
+        <div class="pp-sec__body">
           @for (additive of r.additives; track additive.code) {
-            <article class="np-additive-card">
+            <article class="np-additive-card" [class.np-additive-card--alert]="additive.status === 'controversial' || additive.status === 'sweetener'">
               <span class="np-additive-card__code">{{ additive.code }}</span>
-              <span class="np-additive-card__name">{{ additive.name }}</span>
+              <span class="np-additive-card__text">
+                <span class="np-additive-card__name">{{ additive.name }}</span>
+                @if (additive.note) {
+                  <span class="np-additive-card__note">{{ additive.note }}</span>
+                }
+              </span>
             </article>
           }
         </div>
-      }
-      </div>
-    </details>
+      </details>
+    }
 
     <details class="pp-sec">
       <summary class="pp-sec__head">Nutriments <span class="pp-muted">{{ r.isInfantFormula ? 'valeurs de référence' : '' }}</span></summary>
