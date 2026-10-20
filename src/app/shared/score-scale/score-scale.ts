@@ -21,12 +21,9 @@ import { scaleFor } from '../score-scale';
         <span class="sc__mark" [style.left.%]="score()"></span>
       </div>
       <div class="sc__labels" aria-hidden="true">
-        @for (s of segments(); track s.level) {
-          <span
-            [style.flex-grow]="s.to - s.from + 1"
-            [class]="s.level === level() ? 'sc__lbl sc__lbl--on np-ink--' + s.level : 'sc__lbl'"
-          >{{ s.label }}</span>
-        }
+        <span>0</span>
+        <span [class]="'sc__lbl np-ink--' + level()" [style.left.%]="labelPos()">{{ activeLabel() }}</span>
+        <span>100</span>
       </div>
     </div>
   `,
@@ -41,9 +38,10 @@ import { scaleFor } from '../score-scale';
       position: absolute; top: -6px; width: 4px; height: 24px; margin-left: -2px;
       background: var(--np-ink); border-radius: 2px; box-shadow: 0 0 0 3px var(--np-surface);
     }
-    .sc__labels { display: flex; gap: 3px; font-size: 12px; color: var(--np-ink-2); }
-    .sc__lbl { flex-basis: 0; min-width: 0; text-align: center; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
-    .sc__lbl--on { font-weight: 700; overflow: visible; }
+    /* Une seule étiquette, sous le repère : les tranches étroites (Idéal = 4 points)
+       ne laissent pas la place d'écrire chaque niveau sans chevauchement. */
+    .sc__labels { position: relative; display: flex; justify-content: space-between; height: 18px; font-size: 12px; color: var(--np-ink-2); }
+    .sc__lbl { position: absolute; top: 0; transform: translateX(-50%); font-weight: 700; white-space: nowrap; }
   `,
 })
 export class ScoreScale {
@@ -52,6 +50,11 @@ export class ScoreScale {
   infantFormula = input(false);
 
   segments = computed(() => scaleFor(this.infantFormula()));
+
+  activeLabel = computed(() => this.segments().find((s) => s.level === this.level())?.label ?? '');
+
+  /** Centrée sur le repère, sans déborder des bords ni masquer « 0 » et « 100 ». */
+  labelPos = computed(() => Math.max(22, Math.min(78, this.score())));
 
   ariaLabel = computed(() => {
     const seg = this.segments().find((s) => s.level === this.level());

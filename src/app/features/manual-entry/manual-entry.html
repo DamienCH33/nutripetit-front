@@ -1,28 +1,34 @@
-<div class="np-manual-entry">
-  <header class="np-manual-entry__header">
-    <h1 class="np-manual-entry__title">
-      <app-icon name="scan-barcode" class="np-manual-entry__title-icon" />
-      Saisie manuelle
-    </h1>
-    <p class="np-manual-entry__lead">Entre le code-barres du produit (13 chiffres).</p>
+<div class="me">
+  <header class="me__intro">
+    <h1>Saisir le code-barres</h1>
+    <p class="me__lead">Le code est abîmé ou la caméra ne marche pas&#160;? Tapez les chiffres écrits sous les barres.</p>
   </header>
 
-  <div class="np-manual-entry__form">
-    <label for="ean-input" class="np-manual-entry__label">Code-barres</label>
+  <form class="me__form" (ngSubmit)="submit()" novalidate>
+    <label for="ean-input" class="me__label">Code-barres</label>
     <input
-      type="text"
       id="ean-input"
-      class="np-manual-entry__input"
+      name="ean"
+      type="text"
       inputmode="numeric"
-      maxlength="13"
-      placeholder="3041091342034"
+      autocomplete="off"
+      maxlength="20"
+      class="me__input"
+      [class.me__input--error]="touched() && error()"
+      [attr.aria-invalid]="touched() && error() ? 'true' : null"
+      aria-describedby="ean-hint ean-error"
       [ngModel]="ean()"
-      (ngModelChange)="ean.set($event)"
-      (keyup.enter)="submit()"
+      (ngModelChange)="onInput($event)"
+      (blur)="ean() !== '' && touched.set(true)"
     />
-    <button type="button" class="np-manual-entry__btn" (click)="submit()">
-      <app-icon name="list-checks" class="np-manual-entry__btn-icon" />
-      Analyser le produit
-    </button>
-  </div>
+    <p id="ean-hint" class="me__hint">8 ou 13 chiffres le plus souvent. Les espaces ne comptent pas.</p>
+    <p id="ean-error" class="me__error" aria-live="polite">
+      @if (touched() && error(); as e) {
+        {{ e }}
+      }
+    </p>
+    <button type="submit" class="np-cta">Voir le score</button>
+  </form>
+
+  <a routerLink="/scanner" class="me__alt">Scanner plutôt avec la caméra</a>
 </div>
