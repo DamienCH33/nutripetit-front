@@ -1,0 +1,32 @@
+/*
+ * Pastilles de niveau (refonte 2026-10). Couleur + texte : jamais la couleur seule.
+ * Toutes les paires texte/fond passent 4.5:1.
+ */
+.np-level {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    border-radius: 999px;
+    padding: 4px 10px;
+    font-size: 13px;
+    font-weight: 700;
+    white-space: nowrap;
+}
+.np-level--ideal { background: #DDEFE2; color: #1A5A31; }
+.np-level--good { background: #E3F1DF; color: #245E2B; }
+.np-level--occasional { background: #FBF0CC; color: #6B4B00; }
+.np-level--limit { background: #FCE6D6; color: #8F3E08; }
+.np-level--discouraged { background: #FBE4E2; color: #8C1D17; }
+
+/* Couleur pleine d'un niveau (segments d'échelle, chiffre du score). */
+.np-fill--ideal { background: #1F6B3B; }
+.np-fill--good { background: #3F8F2E; }
+.np-fill--occasional { background: #E9B51F; }
+.np-fill--limit { background: #D9661A; }
+.np-fill--discouraged { background: #B3261E; }
+
+.np-ink--ideal { color: #1A5A31; }
+.np-ink--good { color: #245E2B; }
+.np-ink--occasional { color: #6B4B00; }
+.np-ink--limit { color: #8F3E08; }
+.np-ink--discouraged { color: #8C1D17; }

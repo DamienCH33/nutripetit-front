@@ -1,106 +1,141 @@
 <div class="np-product">
   @if (loading()) {
-    <p>Chargement…</p>
-  } @else if (error(); as e) {
-    <div class="np-scan-error">
-      <h2 class="np-scan-error__title">{{ e.title }}</h2>
-      <p class="np-scan-error__message">{{ e.message }}</p>
-      <a routerLink="/" class="np-scan-error__back">Retour à la recherche</a>
+    <div class="pp-skel" aria-busy="true">
+      <div class="pp-skel__head" aria-hidden="true">
+        <span class="pp-sk pp-sk--thumb"></span>
+        <span class="pp-skel__lines"><span class="pp-sk" style="width: 45%"></span><span class="pp-sk pp-sk--lg" style="width: 80%"></span></span>
+      </div>
+      <div class="pp-card" aria-hidden="true">
+        <span class="pp-sk pp-sk--score"></span>
+        <span class="pp-sk pp-sk--bar"></span>
+        <span class="pp-sk" style="width: 40%"></span>
+        <span class="pp-sk" style="width: 90%"></span>
+        <span class="pp-sk" style="width: 70%"></span>
+      </div>
+      <p role="status" class="pp-skel__msg">Analyse du produit pour {{ who() }}…</p>
     </div>
+  } @else if (error(); as e) {
+    <section class="pp-error">
+      @if (ean(); as code) {
+        <p class="pp-error__code">Code {{ code }}</p>
+      }
+      <h1 class="pp-error__title">{{ e.title }}</h1>
+      <p class="pp-error__msg">{{ e.message }}</p>
+      @if (ean(); as code) {
+        <div class="pp-card pp-error__fix">
+          <h2 class="pp-h2">C'est bien un produit pour bébé&#160;?</h2>
+          <p class="pp-muted">
+            Complétez sa fiche en 2 minutes (photo de l'emballage, catégorie « aliments pour bébé »).
+            NutriPetit la relit chaque jour.
+          </p>
+          <a
+            class="np-cta"
+            href="https://fr.openfoodfacts.org/produit/{{ code }}"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            <app-icon name="camera" class="pp-ico" />
+            Compléter la fiche sur Open Food Facts
+          </a>
+        </div>
+      }
+      <a routerLink="/scanner" class="np-cta np-cta--outline">Scanner un autre produit</a>
+    </section>
   } @else if (result(); as r) {
-    @if (r.isInfantFormula) {
-      <aside class="np-formula-notice" role="note">
+    @if (r.criticalAlert; as alert) {
+      <section class="pp-alert" role="alert">
+        <app-icon name="alert-triangle" class="pp-alert__ico" />
+        <h1 class="pp-alert__title">{{ alertTitle(alert.title) }}</h1>
+        <p class="pp-alert__msg">{{ alert.message }}</p>
+        @if (alert.source_url) {
+          <a [href]="alert.source_url" target="_blank" rel="noopener noreferrer" class="pp-alert__src">
+            Source : {{ alert.source_name }}
+          </a>
+        }
+        <p class="pp-alert__care">
+          Votre enfant en a déjà consommé et vous êtes inquiet&#160;? Contactez votre médecin. En cas
+          d'urgence, appelez le 15.
+        </p>
+      </section>
+    }
+
+    <section class="pp-product">
+      <span class="pp-product__img">
+        @if (r.product.image_url) {
+          <img [src]="r.product.image_url" alt="" />
+        }
+      </span>
+      <span class="pp-product__text">
+        <span class="pp-muted">{{ r.product.brand || 'Marque inconnue' }}</span>
+        <span class="pp-product__name">{{ r.product.name }}</span>
+      </span>
+    </section>
+
+    @if (r.dataIncomplete) {
+      <aside class="np-formula-notice np-formula-notice--warning" role="note">
         <div class="np-formula-notice__icon-wrapper">
-          <app-icon name="baby" class="np-formula-notice__icon" />
+          <app-icon name="alert-triangle" class="np-formula-notice__icon" />
         </div>
         <div class="np-formula-notice__content">
-          <p class="np-formula-notice__title">Lait infantile — Notation spécifique</p>
+          <p class="np-formula-notice__title">Fiche incomplète — score partiel</p>
           <p class="np-formula-notice__message">
-            Tous les laits infantiles vendus en Europe sont strictement réglementés et garantissent
-            les apports nécessaires. Le choix d'un lait infantile doit faire l'objet d'un avis
-            pédiatrique. Le score reflète uniquement des critères optionnels de qualité (bio, sans
-            huile de palme, prébiotiques…) : un lait « conforme et sûr » reste parfaitement adapté à
-            votre enfant. Ne changez jamais de lait sans avis médical.
+            Open Food Facts n'a pas tous les éléments de ce produit (liste d'ingrédients ou tableau
+            nutritionnel). Les critères qui en dépendent (sucres ajoutés, miel, additifs, allergènes,
+            sel…) n'ont pas pu être vérifiés : le score peut être trop favorable. Vérifiez
+            l'emballage.
           </p>
         </div>
       </aside>
     }
-    @if (r.criticalAlert; as alert) {
-      <aside class="np-critical-alert" role="alert">
-        <div class="np-critical-alert__icon-wrapper">
-          <app-icon name="alert-triangle" class="np-critical-alert__icon" />
+
+    @if (r.criticalAlert) {
+      <p class="pp-card pp-hidden-score">
+        Le score n'est pas affiché tant que cette alerte s'applique : un bon score ne doit pas
+        faire oublier le risque. Le détail reste consultable plus bas.
+      </p>
+    } @else {
+      <section class="pp-card pp-verdict" aria-labelledby="pp-verdict">
+        <div class="pp-verdict__top">
+          <span [class]="'pp-verdict__score np-ink--' + r.level" aria-hidden="true">{{ r.finalScore }}</span>
+          <div class="pp-verdict__text">
+            <h1 id="pp-verdict" class="pp-verdict__title">{{ verdict(r) }}</h1>
+            <span class="pp-muted">Score {{ r.finalScore }} sur 100{{ r.isInfantFormula ? ' · lait infantile' : '' }}</span>
+          </div>
         </div>
-        <div class="np-critical-alert__content">
-          <p class="np-critical-alert__title">{{ alert.title }}</p>
-          <p class="np-critical-alert__message">{{ alert.message }}</p>
-          @if (alert.source_url) {
-            <a
-              [href]="alert.source_url"
-              target="_blank"
-              rel="noopener noreferrer"
-              class="np-critical-alert__source"
-            >
-              Source : {{ alert.source_name }}
-              <app-icon name="external-link" class="np-critical-alert__source-icon" />
-            </a>
-          }
+
+        <app-score-scale [score]="r.finalScore" [level]="r.level" [infantFormula]="r.isInfantFormula" />
+
+        <div class="pp-why">
+          <h2 class="pp-h2">Pourquoi ce score</h2>
+          <ul class="pp-why__list">
+            @for (w of why(r); track w.label) {
+              <li class="pp-why__item">
+                <span [class]="'pp-why__pts pp-why__pts--' + w.tone">{{ w.points }}</span>
+                <span [class.pp-muted]="w.tone === 'base'">{{ w.label }}</span>
+              </li>
+            }
+          </ul>
         </div>
-      </aside>
+
+        @if (r.isInfantFormula) {
+          <p class="pp-note">
+            Tous les laits infantiles vendus en Europe sont conformes. Ce score les compare sur des
+            critères facultatifs. Ne changez pas de lait sans l'avis de votre pédiatre.
+          </p>
+        }
+        <p class="pp-disclaimer">
+          Score indicatif, calculé à partir de recommandations générales et des données Open Food
+          Facts, sans connaître votre enfant (allergies, prématurité, poids, traitement). Ce n'est
+          pas un avis médical.
+        </p>
+      </section>
     }
-    <app-product-header
-      [name]="r.product.name"
-      [brand]="r.product.brand"
-      [ean]="r.product.ean"
-      [imageUrl]="r.product.image_url"
-    />
 
-    <app-score-circle [score]="r.finalScore" [level]="r.level" [levelLabel]="r.levelLabel" />
 
-    <!-- Barre d'onglets -->
-    <div class="np-tabs np-tabs--scrollable" role="tablist">
-      <button
-        type="button"
-        [class]="'np-tabs__tab' + (activeTab() === 'rules' ? ' np-tabs__tab--active' : '')"
-        (click)="setTab('rules')"
-      >
-        <app-icon name="list-checks" class="np-tabs__icon" />
-        <span>Détails</span>
-      </button>
-      <button
-        type="button"
-        [class]="'np-tabs__tab' + (activeTab() === 'nutrients' ? ' np-tabs__tab--active' : '')"
-        (click)="setTab('nutrients')"
-      >
-        <app-icon name="bar-chart" class="np-tabs__icon" />
-        <span>Nutriments</span>
-      </button>
-      <button
-        type="button"
-        [class]="'np-tabs__tab' + (activeTab() === 'environment' ? ' np-tabs__tab--active' : '')"
-        (click)="setTab('environment')"
-      >
-        <app-icon name="leaf" class="np-tabs__icon" />
-        <span>Environnement</span>
-      </button>
-      <button
-        type="button"
-        [class]="'np-tabs__tab' + (activeTab() === 'age' ? ' np-tabs__tab--active' : '')"
-        (click)="setTab('age')"
-      >
-        <app-icon name="calendar" class="np-tabs__icon" />
-        <span>Par âge</span>
-      </button>
-      <button
-        type="button"
-        [class]="'np-tabs__tab' + (activeTab() === 'sources' ? ' np-tabs__tab--active' : '')"
-        (click)="setTab('sources')"
-      >
-        <app-icon name="book-open" class="np-tabs__icon" />
-        <span>Sources</span>
-      </button>
-    </div>
-
-    @if (activeTab() === 'rules') {
+    <h2 class="pp-h2 pp-detail-title">En détail</h2>
+    <details class="pp-sec">
+      <summary class="pp-sec__head">Tous les critères <span class="pp-muted">{{ rulesMeta(r) }}</span></summary>
+      <div class="pp-sec__body">
       <!-- Points à surveiller (malus) -->
       @if (rulesByCategory('malus').length > 0) {
         <div class="np-rules-section">
@@ -159,9 +194,12 @@
           }
         </div>
       }
-    }
+      </div>
+    </details>
 
-    @if (activeTab() === 'nutrients') {
+    <details class="pp-sec">
+      <summary class="pp-sec__head">Nutriments <span class="pp-muted">{{ r.isInfantFormula ? 'valeurs de référence' : '' }}</span></summary>
+      <div class="pp-sec__body">
       @if (r.isInfantFormula) {
         <!-- Laits : pas de tableau. Valeurs OFF = poudre (non comparables aux repères
          réglementaires en reconstitué) et moyenne de catégorie non discriminante.
@@ -198,9 +236,12 @@
           <p>Données nutritionnelles non disponibles pour ce produit.</p>
         }
       }
-    }
+      </div>
+    </details>
 
-    @if (activeTab() === 'age') {
+    <details class="pp-sec">
+      <summary class="pp-sec__head">Selon l'âge <span class="pp-muted">{{ ageMeta(r) }}</span></summary>
+      <div class="pp-sec__body">
       @if (r.isInfantFormula) {
         <div class="np-age-info">
           <p class="np-age-info__text">
@@ -235,9 +276,12 @@
           }
         </div>
       }
-    }
+      </div>
+    </details>
 
-    @if (activeTab() === 'environment') {
+    <details class="pp-sec">
+      <summary class="pp-sec__head">Origine et environnement <span class="pp-muted">{{ r.environment.origin?.country ?? '' }}</span></summary>
+      <div class="pp-sec__body">
       <div class="np-env-info">
         <p class="np-env-info__text">
           <app-icon name="info" class="np-env-info__icon" />
@@ -316,9 +360,12 @@
           </p>
         </article>
       }
-    }
+      </div>
+    </details>
 
-    @if (activeTab() === 'sources') {
+    <details class="pp-sec">
+      <summary class="pp-sec__head">Sources <span class="pp-muted">{{ r.uniqueSources.length }}</span></summary>
+      <div class="pp-sec__body">
       <div class="np-sources-intro">
         <div class="np-sources-intro__badge">Algorithme v{{ r.algoVersion }}</div>
         <p class="np-sources-intro__text">
@@ -339,7 +386,8 @@
           <app-icon name="external-link" class="np-source-card__arrow" />
         </a>
       }
-    }
+      </div>
+    </details>
 
     <footer class="np-attribution" role="contentinfo">
       <p class="np-attribution__text">

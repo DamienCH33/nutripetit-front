@@ -1,4 +1,5 @@
 /* Base */
+@use 'legacy-styles/base/fonts';
 @use 'legacy-styles/base/variables';
 @use 'legacy-styles/base/reset';
 @use 'legacy-styles/base/typography';
@@ -8,6 +9,7 @@
 @use 'legacy-styles/components/buttons';
 @use 'legacy-styles/components/cards';
 @use 'legacy-styles/components/score';
+@use 'legacy-styles/components/level';
 @use 'legacy-styles/components/navigation';
 @use 'legacy-styles/components/forms';
 @use 'legacy-styles/components/disclaimer';
@@ -16,5 +18,83 @@
 
 body {
   font-family: var(--np-font-family);
+  color: var(--np-ink);
+  background: var(--np-ground);
   margin: 0;
+}
+
+/* Refonte 2026-10 : titres en Bricolage, focus toujours visible. */
+h1,
+h2,
+h3,
+.np-display {
+  font-family: var(--np-font-display);
+  letter-spacing: -0.02em;
+}
+
+:focus-visible {
+  outline: 3px solid var(--np-focus);
+  outline-offset: 2px;
+}
+
+.np-sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  white-space: nowrap;
+}
+
+/* Bouton d'action principale (orange marque, texte encre : contraste 8:1). */
+.np-cta {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  min-height: 58px;
+  padding: 0 20px;
+  border: 0;
+  border-radius: 18px;
+  background: var(--np-orange-primary);
+  color: var(--np-ink);
+  font: inherit;
+  font-size: 18px;
+  font-weight: 700;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+.np-cta--dark {
+  background: var(--np-ink);
+  color: #fff;
+}
+
+.np-cta--outline {
+  background: var(--np-surface);
+  border: 1.5px solid var(--np-line-strong);
+  font-size: 16px;
+  min-height: 52px;
+}
+
+.np-cta--danger {
+  background: var(--np-danger);
+  color: #fff;
+}
+
+.np-link {
+  display: inline-flex;
+  align-items: center;
+  min-height: 44px;
+  color: var(--np-ink);
+  font-weight: 700;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    transition-duration: 0.01ms !important;
+  }
 }

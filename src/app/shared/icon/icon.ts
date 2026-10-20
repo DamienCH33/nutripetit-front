@@ -6,6 +6,8 @@ import { CommonModule } from '@angular/common';
   imports: [CommonModule],
   templateUrl: './icon.html',
   styleUrl: './icon.scss',
+  // Décoratif : le texte voisin ou l'aria-label du bouton porte le sens.
+  host: { 'aria-hidden': 'true' },
 })
 export class Icon {
   @Input({ required: true }) name!: string;

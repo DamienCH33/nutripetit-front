@@ -1,41 +1,72 @@
-<div class="np-scanner">
-  <header class="np-scanner__header">
-    <h1 class="np-scanner__title">
-      <app-icon name="scan-line" class="np-scanner__title-icon" />
-      Scanner un produit
-    </h1>
-    <p class="np-scanner__lead">Pointez votre caméra vers le code-barres EAN-13 du produit.</p>
+<div class="sc-screen">
+  <video #videoElement class="sc-video" playsinline muted aria-hidden="true"></video>
+  <div class="sc-shade" aria-hidden="true"></div>
+
+  <header class="sc-top">
+    <a routerLink="/" class="sc-round" aria-label="Fermer le scanner">
+      <app-icon name="x" class="sc-round__ico" />
+    </a>
+    @if (who()) {
+      <span class="sc-for">Pour {{ who() }}</span>
+    }
+    @if (torchAvailable()) {
+      <button
+        type="button"
+        class="sc-round"
+        [class.sc-round--on]="torchOn()"
+        [attr.aria-pressed]="torchOn()"
+        [attr.aria-label]="torchOn() ? 'Éteindre la lampe' : 'Allumer la lampe'"
+        (click)="toggleTorch()"
+      >
+        <app-icon name="flashlight" class="sc-round__ico" />
+      </button>
+    } @else {
+      <span class="sc-round sc-round--ghost" aria-hidden="true"></span>
+    }
   </header>
 
-  <div class="np-scanner__viewport">
-    <video #videoElement class="np-scanner__video" playsinline></video>
-    <div class="np-scanner__overlay">
-      <div class="np-scanner__frame"></div>
+  <div class="sc-center">
+    <div class="sc-frame" aria-hidden="true">
+      <span class="sc-corner sc-corner--tl"></span>
+      <span class="sc-corner sc-corner--tr"></span>
+      <span class="sc-corner sc-corner--bl"></span>
+      <span class="sc-corner sc-corner--br"></span>
+      <span class="sc-line"></span>
     </div>
+
+    @if (error(); as e) {
+      <p class="sc-status sc-status--error" role="alert">{{ e }}</p>
+    } @else {
+      <p class="sc-status" [class.sc-status--ok]="detected()" role="status">
+        @if (detected()) {
+          <app-icon name="check" class="sc-status__ico" />
+        }
+        {{ status() }}
+      </p>
+    }
+    <p class="sc-tip">Tenez le téléphone à 15 cm du code. Trop sombre&#160;? Allumez la lampe.</p>
   </div>
 
-  <p class="np-scanner__status">{{ status() }}</p>
-
-  @if (error(); as e) {
-    <p class="np-scanner__error">{{ e }}</p>
-  }
-
-  <div class="np-scanner__actions">
-    <button type="button" class="np-scanner__btn np-scanner__btn--secondary" (click)="stop()">
-      <app-icon name="square" class="np-scanner__btn-icon" /> Arrêter
-    </button>
-    <a routerLink="/saisie-manuelle" class="np-scanner__btn np-scanner__btn--ghost">
-      <app-icon name="keyboard" class="np-scanner__btn-icon" />
-      Saisie manuelle
-    </a>
-  </div>
-
-  <div class="np-scanner__help">
-    <p>
-      <app-icon name="info" class="np-scanner__help-icon" />
-      <strong>Astuce :</strong>
-      Tenez votre téléphone à environ 15-20 cm du code-barres, avec un bon éclairage. Pour les
-      boîtes courbées, ajustez l'angle pour aplatir le code.
-    </p>
-  </div>
+  <form class="sc-manual" (ngSubmit)="submitManual()">
+    <label for="sc-ean" class="sc-manual__label">Le code ne passe pas&#160;? Tapez les 13 chiffres</label>
+    <div class="sc-manual__row">
+      <input
+        id="sc-ean"
+        name="ean"
+        inputmode="numeric"
+        autocomplete="off"
+        maxlength="13"
+        placeholder="3 701293 900233"
+        class="sc-manual__input"
+        [attr.aria-invalid]="manualError() ? 'true' : null"
+        [attr.aria-describedby]="manualError() ? 'sc-ean-err' : null"
+        [ngModel]="manual()"
+        (ngModelChange)="onManualChange($event)"
+      />
+      <button type="submit" class="sc-manual__go">Voir</button>
+    </div>
+    @if (manualError(); as m) {
+      <p id="sc-ean-err" class="sc-manual__err">{{ m }}</p>
+    }
+  </form>
 </div>

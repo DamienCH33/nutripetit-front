@@ -1,13 +1,143 @@
-
-.np-app-install {
+.home__hero {
+  padding: 18px 4px 0;
   display: flex;
-  width: 100%;
-  justify-content: center;
-  margin: var(--np-spacing-4, 1rem) 0;
-  cursor: pointer;
+  flex-direction: column;
+  gap: 8px;
 }
 
-.np-app-install__icon {
+.home__title {
+  margin: 0;
+  font-size: 34px;
+  line-height: 1.05;
+  font-weight: 800;
+  letter-spacing: -0.03em;
+}
+
+.home__lead {
+  margin: 0;
+  font-size: 16px;
+  line-height: 1.45;
+  color: var(--np-ink-2);
+}
+
+.home__age-link {
+  color: var(--np-ink);
+  font-weight: 700;
+}
+
+.home__actions {
+  padding: 22px 0 0;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.home__scan {
+  min-height: 76px;
+  border-radius: 22px;
+  font-size: 20px;
+  box-shadow: var(--np-shadow-orange);
+}
+
+.home__scan-icon {
+  width: 30px;
+  height: 30px;
+}
+
+.home__manual {
+  align-self: center;
+  font-size: 15px;
+}
+
+.home__install {
+  width: 100%;
+  margin-top: 16px;
+  min-height: 48px;
+  font-size: 15px;
+}
+
+.home__install-icon {
   width: 20px;
   height: 20px;
+}
+
+.home__recent {
+  padding: 18px 0 8px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.home__recent-head {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.home__h2 {
+  margin: 0;
+  font-size: 18px;
+  font-weight: 700;
+}
+
+.home__item {
+  display: flex;
+  gap: 12px;
+  align-items: center;
+  padding: 10px 12px;
+  background: var(--np-surface);
+  border: 1px solid #e3e9e0;
+  border-radius: 16px;
+  text-decoration: none;
+  color: var(--np-ink);
+}
+
+.home__thumb {
+  width: 48px;
+  height: 48px;
+  border-radius: 12px;
+  background: var(--np-surface-muted);
+  flex-shrink: 0;
+  overflow: hidden;
+
+  img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+  }
+}
+
+.home__item-text {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  flex: 1;
+  min-width: 0;
+}
+
+.home__item-name {
+  font-size: 15px;
+  font-weight: 700;
+  line-height: 1.3;
+  // Deux lignes avant de couper : au rayon, « Lait infantile 0-6 m… » ne suffit
+  // pas à reconnaître le produit.
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+.home__item-brand {
+  font-size: 13px;
+  color: var(--np-ink-2);
+}
+
+.home__empty {
+  margin: 0;
+  padding: 16px;
+  border-radius: 16px;
+  border: 1.5px dashed var(--np-line-strong);
+  font-size: 15px;
+  line-height: 1.45;
+  color: var(--np-ink-2);
 }

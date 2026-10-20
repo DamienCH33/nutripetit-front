@@ -10,12 +10,13 @@
   --np-orange-primary: #FF9F3D;
   --np-orange-light: #FFB86B;
   --np-orange-dark: #E8861F;
+  --np-orange-ink: #8A4200;
 
   --np-green-primary: #8BC34A;
-  --np-green-dark: #2E7D32;
+  --np-green-dark: #245E2B;
 
-  --np-cream: #F6EAD7;
-  --np-cream-light: #FDF7F1;
+  --np-cream: #E8EEE4;
+  --np-cream-light: #F3F6F1;
 
   /* ============================================
    * COULEURS DE SCORE - 5 NIVEAUX
@@ -24,24 +25,27 @@
    * ============================================ */
 
   /* Niveau 1 : 85-100 - Idéal pour bébé */
-  --np-score-ideal: #1B5E20;
+  --np-score-ideal: #1F6B3B;
   --np-score-ideal-bg: rgba(27, 94, 32, 0.08);
   --np-score-ideal-light: #4CAF50;
 
   /* Niveau 2 : 70-84 - Bon choix */
-  --np-score-good: #66BB6A;
+  --np-score-good: #3F8F2E;
   --np-score-good-bg: rgba(102, 187, 106, 0.10);
 
   /* Niveau 3 : 50-69 - Occasionnel */
-  --np-score-occasional: #FBC02D;
+  --np-score-occasional: #E9B51F;
+  /* Texte sur fond clair : le jaune seul ne passe pas le contraste 4.5:1. */
+  --np-score-occasional-ink: #6B4B00;
   --np-score-occasional-bg: rgba(251, 192, 45, 0.10);
 
   /* Niveau 4 : 30-49 - À limiter */
-  --np-score-limit: #F57C00;
+  --np-score-limit: #D9661A;
+  --np-score-limit-ink: #A3470A;
   --np-score-limit-bg: rgba(245, 124, 0, 0.10);
 
   /* Niveau 5 : 0-29 - Déconseillé */
-  --np-score-discouraged: #C62828;
+  --np-score-discouraged: #B3261E;
   --np-score-discouraged-bg: rgba(198, 40, 40, 0.10);
 
   /* ============================================
@@ -56,7 +60,7 @@
    * COULEURS NEUTRES
    * ============================================ */
   --np-white: #FFFFFF;
-  --np-black: #1F1F1F;
+  --np-black: #1E2B24;
   --np-gray-50: #FAFAFA;
   --np-gray-100: #F5F5F5;
   --np-gray-200: #E5E5E5;
@@ -71,7 +75,8 @@
   /* ============================================
    * TYPOGRAPHIE
    * ============================================ */
-  --np-font-family: 'Poppins', system-ui, -apple-system, sans-serif;
+  --np-font-family: 'Atkinson Hyperlegible', system-ui, -apple-system, sans-serif;
+  --np-font-display: 'Bricolage Grotesque', 'Atkinson Hyperlegible', system-ui, sans-serif;
 
   --np-font-size-xs: 0.75rem;
   --np-font-size-sm: 0.875rem;
@@ -114,5 +119,23 @@
   --np-shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.05);
   --np-shadow-md: 0 4px 6px rgba(0, 0, 0, 0.07);
   --np-shadow-lg: 0 10px 15px rgba(0, 0, 0, 0.10);
-  --np-shadow-orange: 0 4px 16px rgba(255, 159, 61, 0.25);
+  --np-shadow-orange: 0 8px 18px rgba(232, 134, 31, 0.28);
+
+  /* ============================================
+   * REFONTE 2026-10 : surfaces et encre
+   * ============================================ */
+  --np-ground: #F3F6F1;        /* fond de l'appli (vert lait, pas crème) */
+  --np-surface: #FFFFFF;
+  --np-surface-muted: #EEF1EA;
+  --np-ink: #1E2B24;           /* texte principal */
+  --np-ink-2: #4A5A50;         /* texte secondaire : 7:1 sur le fond */
+  --np-line: #D9E1D6;
+  --np-line-strong: #C9D3C5;
+  --np-info-bg: #EEF4FB;
+  --np-info-ink: #1F3A5C;
+  --np-danger: #B3261E;
+  --np-danger-ink: #8C1D17;
+  --np-danger-bg: #FBE4E2;
+  --np-good-bg: #E3F1DF;
+  --np-focus: #2F6FDB;
 }
