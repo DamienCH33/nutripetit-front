@@ -1,88 +1,86 @@
-<section class="np-baby-hero">
-  <div class="np-baby-hero__avatar">
-    <app-icon name="baby" class="np-baby-hero__avatar-icon" />
-  </div>
-  <h1 class="np-baby-hero__title">Mon enfant</h1>
-  <p class="np-baby-hero__subtitle">
-    Indiquez l'âge de votre enfant pour adapter le scoring nutritionnel.
-  </p>
-</section>
+<div class="bp">
+  <header class="bp__intro">
+    <h1>Votre enfant</h1>
+    <p class="bp__lead">Le score s'adapte à son âge. Pensez à le changer quand il grandit.</p>
+  </header>
 
-@if (showSaved() && currentRange(); as r) {
-  <div class="np-baby-current">
-    <div class="np-baby-current__header">
-      <app-icon name="check-circle-2" class="np-baby-current__icon" />
-      <span>Âge enregistré</span>
-    </div>
-    <p class="np-baby-current__age">{{ age() }} mois</p>
-    <p class="np-baby-current__range">{{ r.label }}</p>
-  </div>
-}
-
-<section class="np-baby-form">
-  <div class="np-baby-field">
-    <label for="baby-age" class="np-baby-field__label">Âge de votre enfant</label>
-    <div class="np-baby-age-display">
-      <span class="np-baby-age-display__value">{{ age() }}</span>
-      <span class="np-baby-age-display__unit">mois</span>
-    </div>
+  <div class="bp__field">
+    <label for="bp-prenom" class="bp__label">Prénom <span>(facultatif)</span></label>
     <input
-      type="range"
-      min="0"
-      max="36"
-      step="1"
-      [value]="age()"
-      (input)="onAgeChange(+$any($event.target).value)"
-      class="np-baby-field__slider"
+      id="bp-prenom"
+      name="prenom"
+      type="text"
+      autocomplete="off"
+      maxlength="30"
+      class="bp__input"
+      [ngModel]="name()"
+      (ngModelChange)="name.set($event)"
+      (blur)="saveName()"
+      (keyup.enter)="saveName()"
     />
-    <div class="np-baby-slider-marks">
-      <span>0</span>
-      <span>12</span>
-      <span>24</span>
-      <span>36</span>
-    </div>
   </div>
+
+  <fieldset class="bp__field">
+    <legend class="bp__label">Âge</legend>
+    <div class="bp__stepper">
+      <button type="button" class="bp__step" aria-label="Un mois de moins" (click)="step(-1)">−</button>
+      <p class="bp__value">
+        <span class="bp__number np-display">{{ ageNumber() }}</span>
+        <span class="bp__unit">{{ age() === null ? 'non renseigné' : ageUnit() }}</span>
+      </p>
+      <button type="button" class="bp__step" aria-label="Un mois de plus" (click)="step(1)">+</button>
+    </div>
+    <div class="bp__shortcuts" role="group" aria-label="Âges fréquents">
+      @for (m of shortcuts; track m) {
+        <button
+          type="button"
+          class="bp__chip"
+          [class.bp__chip--on]="age() === m"
+          [attr.aria-pressed]="age() === m"
+          (click)="pick(m)"
+        >
+          {{ shortcutLabel(m) }}
+        </button>
+      }
+    </div>
+  </fieldset>
+
+  <p class="bp__saved" aria-live="polite">
+    @if (saved() && savedText()) {
+      Enregistré : {{ savedText() }}
+    }
+  </p>
 
   @if (currentRange(); as r) {
-    <div class="np-baby-range-card">
-      <div class="np-baby-range-card__icon-wrapper">
-        <app-icon name="calendar" class="np-baby-range-card__icon" />
-      </div>
-      <div class="np-baby-range-card__content">
-        <p class="np-baby-range-card__label">{{ r.label }}</p>
-        <p class="np-baby-range-card__desc">{{ r.description }}</p>
-      </div>
-    </div>
+    <section class="bp__card" aria-label="À cet âge">
+      <h2>{{ r.label }}</h2>
+      <p>{{ r.description }}</p>
+    </section>
   }
 
-  <button type="button" class="np-baby-reset" (click)="reset()">
-    <app-icon name="trash-2" class="np-baby-reset__icon" />
-    Effacer le profil
-  </button>
-</section>
+  <section class="bp__card bp__card--muted">
+    <h2>Pourquoi l'âge compte</h2>
+    <p>
+      Certaines règles en dépendent : le miel est interdit avant 1 an, et les repères de sucres de
+      l'OMS Europe s'appliquent dès 6 mois. Sans âge, NutriPetit applique par prudence les règles
+      valables dès la naissance.
+    </p>
+  </section>
 
-<section class="np-baby-rgpd">
-  <div class="np-baby-rgpd__icon-wrapper">
-    <app-icon name="shield-check" class="np-baby-range-card__icon" />
-  </div>
-  <div>
-    <span class="np-baby-rgpd__title">Données privées</span>
-    <span class="np-baby-rgpd__text"
-      >Stockage local uniquement, aucune donnée envoyée à nos serveurs.</span
-    >
-  </div>
-</section>
-
-<section class="np-baby-info">
-  <div class="np-baby-info__head">
-    <div class="np-baby-info__icon-wrapper">
-      <app-icon name="info" class="np-baby-info__icon" />
-    </div>
-    <h3 class="np-baby-info__title">Pourquoi l'âge est important ?</h3>
-  </div>
-  <p class="np-baby-info__text">
-    Les besoins nutritionnels évoluent fortement entre 0 et 3 ans. NutriPetit adapte ses barèmes de
-    scoring selon la tranche d'âge de votre enfant, conformément aux recommandations ANSES et PNNS
-    4.
+  <p class="bp__privacy">
+    Le prénom et l'âge restent sur ce téléphone. Seul l'âge est envoyé avec un scan, pour calculer
+    le score.
   </p>
-</section>
+
+  <div class="bp__danger">
+    @if (!confirmClear()) {
+      <button type="button" class="bp__clear" (click)="askClear()">Effacer le prénom et l'âge</button>
+    } @else {
+      <p class="bp__confirm-text" role="alert">Effacer le prénom et l'âge de ce téléphone&#160;?</p>
+      <div class="bp__confirm">
+        <button type="button" class="bp__clear bp__clear--go" (click)="clear()">Effacer</button>
+        <button type="button" class="bp__cancel" (click)="cancelClear()">Annuler</button>
+      </div>
+    }
+  </div>
+</div>

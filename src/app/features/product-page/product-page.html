@@ -151,7 +151,7 @@
       <!-- Points positifs (bonus) -->
       @if (rulesByCategory('bonus').length > 0) {
         <div class="np-rules-section">
-          <h3 class="np-rules-section__title np-rules-section__title--bonus">Points positifs</h3>
+          <h3 class="np-rules-section__title np-rules-section__title--bonus">{{ r.isInfantFormula ? 'Points positifs' : 'Atouts (sans effet sur le score)' }}</h3>
           @for (rule of rulesByCategory('bonus'); track rule.rule_code) {
             <app-rule-card [rule]="rule" />
           }
@@ -260,7 +260,7 @@
         </div>
       }
       <p class="np-age-evolution__intro">
-        Le score s'adapte aux besoins nutritionnels par tranche d'âge selon l'ANSES et le PNNS 4.
+        Certaines règles dépendent de l'âge (miel avant 1 an, repères de sucres dès 6 mois) : voici le score de ce produit à chaque âge.
       </p>
       @if (r.scoresByAge.length > 0) {
         <div class="np-age-evolution">

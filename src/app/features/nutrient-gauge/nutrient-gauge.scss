@@ -23,10 +23,9 @@
 }
 
 .np-nutrient {
-  padding: var(--np-spacing-4);
-  background-color: var(--np-white);
-  border-radius: var(--np-radius-md);
-  border: 1px solid var(--np-gray-100);
+  /* Refonte 2026-10 : une ligne dans la section, pas une carte de plus. */
+  padding: 12px 0;
+  border-top: 1px solid var(--np-line);
 }
 
 .np-nutrient__header {

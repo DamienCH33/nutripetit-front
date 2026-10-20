@@ -949,3 +949,175 @@
   font-size: 15px;
   line-height: 1.45;
 }
+
+/* ============================================
+ * REFONTE 2026-10 — intérieur des sections « En détail »
+ * Une seule surface blanche par section : plus de carte dans la carte,
+ * titres à l'encre, couleur réservée au sens (défaut / atout).
+ * ============================================ */
+.pp-sec__body {
+  .np-rules-section {
+    gap: 0;
+    margin-top: 4px;
+  }
+
+  .np-rules-section__title {
+    margin: 12px 0 2px;
+    padding: 0;
+    border: 0;
+    font-family: inherit;
+    font-size: 13px;
+    font-weight: 700;
+    letter-spacing: 0.02em;
+    text-transform: uppercase;
+    color: var(--np-ink-2);
+  }
+
+  .np-rules-section__title--malus {
+    color: var(--np-danger-ink);
+  }
+
+  .np-rules-section__title--bonus {
+    color: #245e2b;
+  }
+
+  .np-rules-accordion {
+    margin-top: 12px;
+    border: 0;
+    border-radius: 12px;
+    background: var(--np-surface-muted);
+    padding: 0 12px;
+  }
+
+  .np-rules-accordion__summary {
+    min-height: 44px;
+    padding: 0;
+    font-size: 14px;
+    font-weight: 700;
+    color: var(--np-ink-2);
+  }
+
+  .np-rules-accordion__body {
+    padding: 0 0 4px;
+  }
+
+  .np-nutrients-category,
+  .np-age-info,
+  .np-env-info,
+  .np-sources-intro,
+  .np-nutrients-info {
+    border: 0;
+    background: transparent;
+    padding: 0;
+    box-shadow: none;
+  }
+
+  .np-nutrients-category {
+    margin: 14px 0 4px;
+    font-size: 13px;
+    font-weight: 700;
+    letter-spacing: 0.02em;
+    text-transform: uppercase;
+    color: var(--np-ink-2);
+  }
+
+  .np-sources-intro {
+    text-align: left;
+    gap: 6px;
+  }
+
+  .np-sources-intro__badge {
+    align-self: flex-start;
+    background: var(--np-surface-muted);
+    color: var(--np-ink-2);
+  }
+
+  .np-sources-intro__text,
+  .np-age-info__text,
+  .np-env-info__text,
+  .np-nutrients-info__text {
+    font-size: 14px;
+    color: var(--np-ink-2);
+  }
+
+  .np-env-card,
+  .np-source-card,
+  .np-additive-card {
+    border: 0;
+    border-top: 1px solid var(--np-line);
+    border-radius: 0;
+    background: transparent;
+    box-shadow: none;
+    margin: 0;
+    padding: 12px 0;
+  }
+
+  .np-source-card:hover {
+    transform: none;
+    box-shadow: none;
+  }
+
+  .np-env-card__icon-wrapper,
+  .np-source-card__icon-wrapper {
+    background: var(--np-surface-muted);
+    color: var(--np-ink-2);
+  }
+
+  .np-env-card__label {
+    text-transform: none;
+    letter-spacing: 0;
+    font-size: 13px;
+    color: var(--np-ink-2);
+  }
+
+  .np-env-card__value {
+    color: var(--np-ink);
+  }
+
+  .np-env-card__check {
+    color: #245e2b;
+  }
+
+  .np-additive-card__code {
+    background: var(--np-surface-muted);
+    font-family: inherit;
+    font-size: 13px;
+  }
+
+  .np-additive-card--alert .np-additive-card__code {
+    background: var(--np-danger-bg);
+    color: var(--np-danger-ink);
+  }
+
+  .np-carbon-card {
+    margin-top: 12px;
+    border: 0;
+    border-radius: 12px;
+    background: var(--np-surface-muted);
+  }
+
+  .np-carbon-card__title,
+  .np-carbon-card__value {
+    color: var(--np-ink);
+  }
+
+  .np-carbon-card__equivalent {
+    color: var(--np-ink-2);
+  }
+
+  .np-attribution__link {
+    color: var(--np-ink);
+  }
+
+  .np-age-evolution {
+    gap: 0;
+  }
+
+  .np-age-evolution__row {
+    border: 0;
+    border-top: 1px solid var(--np-line);
+    border-radius: 0;
+    background: transparent;
+    padding: 10px 0;
+  }
+}

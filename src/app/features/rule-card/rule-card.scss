@@ -1,108 +1,97 @@
-.np-rule-card {
-  padding: var(--np-spacing-4);
-  background-color: var(--np-white);
-  border-radius: var(--np-radius-md);
-  border: 1px solid var(--np-gray-100);
-}
+/* Ligne de critère — refonte 2026-10 : une ligne par règle, pas de carte dans la carte. */
 
-.np-rule-card__header {
+.rc {
   display: flex;
-  gap: var(--np-spacing-3);
-  align-items: flex-start;
+  gap: 12px;
+  padding: 12px 0;
+  border-top: 1px solid var(--np-line);
 }
 
-.np-rule-card__icon-wrapper {
+:host:first-of-type .rc {
+  border-top: 0;
+}
+
+.rc__mark {
   flex-shrink: 0;
-  width: 40px;
-  height: 40px;
-  border-radius: var(--np-radius-md);
-  display: flex;
-  align-items: center;
-  justify-content: center;
+  width: 28px;
+  height: 28px;
+  border-radius: 8px;
+  display: grid;
+  place-items: center;
+  background: var(--np-surface-muted);
+  color: var(--np-ink-2);
 }
 
-.np-rule-card__icon-wrapper--bonus {
-  background-color: var(--np-score-good-bg);
+.rc__mark--malus {
+  background: var(--np-danger-bg);
+  color: var(--np-danger-ink);
 }
 
-.np-rule-card__icon-wrapper--malus {
-  background-color: var(--np-score-discouraged-bg);
+.rc__mark--bonus,
+.rc__mark--satisfied {
+  background: var(--np-good-bg);
+  color: #245e2b;
 }
 
-.np-rule-card__icon {
-  width: 20px;
-  height: 20px;
+.rc__icon {
+  width: 16px;
+  height: 16px;
 }
 
-.np-rule-card__icon-wrapper--bonus .np-rule-card__icon {
-  color: var(--np-score-ideal);
-}
-
-.np-rule-card__icon-wrapper--malus .np-rule-card__icon {
-  color: var(--np-score-discouraged);
-}
-
-.np-rule-card__main {
+.rc__main {
   flex: 1;
   min-width: 0;
-}
-
-.np-rule-card__label {
-  font-size: var(--np-font-size-base);
-  font-weight: var(--np-font-weight-bold);
-  color: var(--np-gray-900);
-  margin-bottom: 2px;
-}
-
-.np-rule-card__reason {
-  font-size: var(--np-font-size-sm);
-  color: var(--np-gray-600);
-  line-height: 1.4;
-}
-
-.np-rule-card__impact {
-  flex-shrink: 0;
-  padding: 6px 12px;
-  border-radius: var(--np-radius-pill);
-  font-size: var(--np-font-size-sm);
-  font-weight: var(--np-font-weight-bold);
-  white-space: nowrap;
-}
-
-.np-rule-card__impact--bonus {
-  background-color: var(--np-score-good-bg);
-  color: var(--np-score-ideal);
-}
-
-.np-rule-card__impact--malus {
-  background-color: var(--np-score-discouraged-bg);
-  color: var(--np-score-discouraged);
-}
-
-.np-rule-card__impact-unit {
-  font-size: var(--np-font-size-xs);
-  font-weight: var(--np-font-weight-medium);
-  margin-left: 2px;
-}
-
-.np-rule-card__source {
   display: flex;
-  align-items: center;
-  gap: 6px;
-  margin-top: var(--np-spacing-3);
-  padding-top: var(--np-spacing-2);
-  border-top: 1px solid var(--np-gray-100);
-  font-size: var(--np-font-size-xs);
-  color: var(--np-orange-primary);
-  font-weight: var(--np-font-weight-medium);
-  text-decoration: none;
+  flex-direction: column;
+  gap: 4px;
 }
 
-.np-rule-card__source:hover {
-  text-decoration: underline;
+.rc__top {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
 }
 
-.np-rule-card__source-icon {
-  width: 12px;
-  height: 12px;
+.rc__label {
+  flex: 1;
+  margin: 0;
+  font-family: inherit;
+  font-size: 15px;
+  font-weight: 700;
+  line-height: 1.3;
+  letter-spacing: 0;
+}
+
+.rc__pts {
+  flex-shrink: 0;
+  min-width: 40px;
+  text-align: center;
+  padding: 2px 6px;
+  border-radius: 8px;
+  font-size: 13px;
+  font-weight: 700;
+}
+
+.rc__pts--minus {
+  background: var(--np-danger-bg);
+  color: var(--np-danger-ink);
+}
+
+.rc__pts--plus {
+  background: var(--np-good-bg);
+  color: #245e2b;
+}
+
+.rc__reason {
+  margin: 0;
+  font-size: 14px;
+  line-height: 1.45;
+  color: var(--np-ink-2);
+}
+
+.rc__source {
+  align-self: flex-start;
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--np-ink);
 }

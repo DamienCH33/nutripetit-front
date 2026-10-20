@@ -1,30 +1,21 @@
-<article [class]="'np-rule-card np-rule-card--' + rule.category">
-  <div class="np-rule-card__header">
-    <div [class]="'np-rule-card__icon-wrapper np-rule-card__icon-wrapper--' + rule.category">
-      <div [class]="'np-rule-card__icon-wrapper np-rule-card__icon-wrapper--' + rule.category">
-        <app-icon [name]="iconName()" class="np-rule-card__icon" />
-      </div>
+<article [class]="'rc rc--' + rule.category">
+  <span [class]="'rc__mark rc__mark--' + rule.category" aria-hidden="true">
+    <app-icon [name]="iconName()" class="rc__icon" />
+  </span>
+  <div class="rc__main">
+    <div class="rc__top">
+      <h4 class="rc__label">{{ rule.rule_label }}</h4>
+      @if (rule.status !== 'satisfied' && rule.points !== 0) {
+        <span [class]="'rc__pts rc__pts--' + (rule.points < 0 ? 'minus' : 'plus')">
+          {{ rule.points > 0 ? '+' : '' }}{{ rule.points }}
+        </span>
+      }
     </div>
-    <div class="np-rule-card__main">
-      <h4 class="np-rule-card__label">{{ rule.rule_label }}</h4>
-      <p class="np-rule-card__reason">{{ rule.reason }}</p>
-    </div>
-    @if (rule.status !== 'satisfied') {
-      <div [class]="'np-rule-card__points np-rule-card__points--' + rule.category">
-        {{ rule.points > 0 ? '+' : '' }}{{ rule.points }}
-        <span class="np-rule-card__points-unit">pts</span>
-      </div>
+    <p class="rc__reason">{{ rule.reason }}</p>
+    @if (rule.source_url) {
+      <a [href]="rule.source_url" target="_blank" rel="noopener noreferrer" class="rc__source">
+        {{ rule.source_name }}
+      </a>
     }
   </div>
-  @if (rule.source_url) {
-    <a
-      [href]="rule.source_url"
-      target="_blank"
-      rel="noopener noreferrer"
-      class="np-rule-card__source"
-    >
-      <app-icon name="external-link" class="np-rule-card__source-icon" />
-      <span>Source : {{ rule.source_name }}</span>
-    </a>
-  }
 </article>
