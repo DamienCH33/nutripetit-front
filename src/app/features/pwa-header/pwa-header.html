@@ -1,9 +1,20 @@
-<header class="np-pwa-header">
-  <a routerLink="/" class="np-pwa-header__logo">
-    <img src="nutripetit.svg" alt="" class="np-pwa-header__logo-icon" width="36" height="36" />
-    <span>
-      <span class="np-header__logo-nutri">Nutri</span
-      ><span class="np-header__logo-petit">Petit</span>
-    </span>
+<header class="hd">
+  <a routerLink="/" class="hd__logo" aria-label="NutriPetit, accueil">
+    <img src="nutripetit.svg" alt="" width="32" height="32" />
+    <span class="np-display">Nutri<span class="hd__petit">Petit</span></span>
+  </a>
+
+  <a
+    routerLink="/profil-bebe"
+    class="hd__child"
+    [attr.aria-label]="
+      profile.label()
+        ? 'Enfant : ' + profile.label() + '. Modifier'
+        : 'Âge de l\'enfant non renseigné. Le renseigner'
+    "
+  >
+    <span class="hd__avatar" aria-hidden="true">{{ initial() }}</span>
+    <span>{{ profile.label() ?? 'Âge ?' }}</span>
+    <app-icon name="chevron-down" class="hd__chevron" />
   </a>
 </header>

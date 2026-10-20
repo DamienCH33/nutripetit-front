@@ -1,14 +1,46 @@
+{
+	# Le proxy de bord Railway parle au conteneur depuis un réseau privé.
+	# On lui fait confiance pour lire la vraie IP du visiteur dans
+	# X-Forwarded-For ; {client_ip} vaut alors l'IP réelle et non celle du proxy.
+	servers {
+		trusted_proxies static private_ranges 100.64.0.0/10
+		client_ip_headers X-Forwarded-For X-Real-IP
+	}
+}
+
+# Transmis à Symfony (qui fait confiance à ce Caddy via TRUSTED_PROXIES=REMOTE_ADDR) :
+# - la vraie IP du visiteur, sinon le limiteur de scans est un compteur global ;
+# - le schéma https, sinon isSecure() est faux : cookie sans Secure, URL absolues
+#   en http:// (robots.txt, sitemap, og:image).
+(api) {
+	reverse_proxy http://nutripetit.railway.internal:8080 {
+		header_up X-Forwarded-For {client_ip}
+		header_up X-Forwarded-Proto https
+	}
+}
+
 :{$PORT:8080} {
-	encode gzip
+	encode zstd gzip
 
 	handle /api/* {
-		reverse_proxy http://nutripetit.railway.internal:8080
+		import api
 	}
 
 	redir /app /app/ permanent
 
 	handle_path /app/* {
 		root * /srv
+
+		# En-têtes de sécurité de la PWA (le Twig a les siens, posés par Symfony).
+		header {
+			Content-Security-Policy "default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline'; img-src 'self' data: https://images.openfoodfacts.org https://static.openfoodfacts.org; font-src 'self'; connect-src 'self'; media-src 'self' blob:; object-src 'none'; base-uri 'self'; form-action 'self'; frame-ancestors 'none'"
+			Strict-Transport-Security "max-age=31536000; includeSubDomains"
+			X-Content-Type-Options nosniff
+			X-Frame-Options DENY
+			Referrer-Policy strict-origin-when-cross-origin
+			Permissions-Policy "camera=(self), microphone=(), geolocation=()"
+			-Server
+		}
 
 		# Fichiers (main-XXXX.js, styles-XXXX.css, images…) : servis tels quels,
 		# 404 s'ils n'existent pas. Avant, un fichier absent (ancien nom après un
@@ -19,7 +51,7 @@
 			# Noms à empreinte : contenu immuable, cache 1 an.
 			# (seulement s'il existe : un 404 ne doit pas rester en cache un an)
 			@empreinte {
-				path_regexp -[A-Za-z0-9]{8,}\.(js|css|woff2)$
+				path_regexp -[A-Za-z0-9_-]{8,}\.(js|css|woff2)$
 				file
 			}
 			header @empreinte Cache-Control "public, max-age=31536000, immutable"
@@ -37,6 +69,6 @@
 	}
 
 	handle {
-		reverse_proxy http://nutripetit.railway.internal:8080
+		import api
 	}
 }
