@@ -26,7 +26,7 @@ export const routes: Routes = [
   {
     path: 'infos',
     loadComponent: () => import('./features/info/info').then((m) => m.Info),
-    title: 'Comment on note — NutriPetit',
+    title: 'Comment on note\u00a0? — NutriPetit',
   },
   {
     path: 'historique',
