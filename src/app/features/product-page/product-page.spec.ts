@@ -155,4 +155,20 @@ describe('ProductPage', () => {
     expect(el.textContent).toContain("Produit inconnu d'Open Food Facts");
     expect(el.querySelector('a[href="/scanner"]')).not.toBeNull();
   });
+
+  it("rappelle sur chaque fiche que ce n'est pas un avis médical", () => {
+    const el = answer(scanResult());
+    expect(el.querySelector('.pp-disclaimer')?.textContent).toContain("pas un avis médical");
+  });
+
+  it("oriente vers le médecin et le 15 sous une alerte critique", () => {
+    const el = answer(
+      scanResult({
+        criticalAlert: { title: 'Contient du miel — interdit avant 1 an', message: 'Botulisme infantile.', source_name: 'ANSES', source_url: 'https://www.anses.fr' },
+      }),
+    );
+    const care = el.querySelector('[role="alert"] .pp-alert__care')?.textContent ?? '';
+    expect(care).toContain('médecin');
+    expect(care).toContain('15');
+  });
 });

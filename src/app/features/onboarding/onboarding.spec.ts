@@ -57,4 +57,10 @@ describe('Onboarding (premier lancement)', () => {
     expect(ageLabel(18)).toBe('18 mois');
     expect(ageLabel(24)).toBe('2 ans');
   });
+
+  it("dit dès le premier lancement que NutriPetit n'est pas un professionnel de santé", () => {
+    const f = TestBed.createComponent(Onboarding);
+    f.detectChanges();
+    expect((f.nativeElement as HTMLElement).textContent).toContain("n'est pas un professionnel de santé");
+  });
 });
