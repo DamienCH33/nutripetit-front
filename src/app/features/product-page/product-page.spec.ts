@@ -188,6 +188,15 @@ describe('ProductPage', () => {
     expect(section?.querySelector('.np-additive-card--alert')?.textContent).toContain('E171');
   });
 
+  it("n'affirme pas « sans huile de palme » quand les ingrédients sont inconnus", () => {
+    const el = answer(
+      scanResult({ environment: { bio_certified: false, palm_oil_free: null, origin: null, packaging: null } }),
+    );
+    expect(el.textContent).toContain('Non vérifiable');
+    expect(el.textContent).not.toContain('Sans huile de palme');
+    expect(el.textContent).not.toContain("Contient de l'huile de palme");
+  });
+
   it("n'affiche pas de section Additifs quand il n'y en a pas", () => {
     const el = answer(scanResult());
     const summaries = [...el.querySelectorAll('details.pp-sec summary')].map((s) => s.textContent ?? '');
