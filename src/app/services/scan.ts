@@ -56,7 +56,8 @@ export interface ScanResult {
   nutrients: Nutrient[];
   environment: {
     bio_certified: boolean;
-    palm_oil_free: boolean;
+    /** null : liste d'ingrédients absente, impossible de conclure. */
+    palm_oil_free: boolean | null;
     origin: { country: string; flag: string } | null;
     packaging: unknown | null;
   };
